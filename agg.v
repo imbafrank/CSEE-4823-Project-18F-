@@ -10,13 +10,13 @@
 // 
 // *********************************************************************************
 
-module agg (clk, rst, agg_in, agg_out2alu, agg_out2act, act_out);
+module agg (clk, rst, agg_in, agg_out2alu, agg_out2act, agg_out_acted, agg_out);
     parameter n = 12;
     input               clk, rst;
     input wire [n-1:0] 		agg_in ;
     output [n-1:0]      agg_out ;
     output reg			agg_out2alu, agg_out2act;
-    output 				act_outacted; 
+    output 				agg_out_acted; 
 	wire 				clk, rst;
 	wire					agg;
 	assign agg_lsb = agg_in[0];
