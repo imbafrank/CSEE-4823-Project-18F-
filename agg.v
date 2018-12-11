@@ -10,31 +10,30 @@
 // 
 // *********************************************************************************
 
-module agg (clk, rst, agg_in, agg_out2alu, agg_out2act, agg_out_acted, agg_out);
-    parameter n = 12;
+module agg (clk, rst, agg_in, agg_out2alu, agg_out2act, agg_out_acted);
+    parameter agg_width = 12;
     input               clk, rst;
-    input wire [n-1:0] 		agg_in ;
-    output [n-1:0]      agg_out ;
-    output reg			agg_out2alu, agg_out2act;
-    output 				agg_out_acted; 
+    input wire [agg_width-1:0] 		agg_in ;
+   // output [agg_width-1:0]      agg_out ;
+    output reg			agg_out_acted, agg_out2act;
+    output reg	[agg_width-1:0] 		agg_out2alu; 
 	wire 				clk, rst;
-	wire					agg;
-	assign agg_lsb = agg_in[0];
-
-    always @(posedge clk, posedge rst)
+	assign agg_msb = agg_in[agg_width-1];
+ 
+    always @(posedge clk or posedge rst)
     begin
-    	if(rst==1)
+    	if(rst==0)
     		begin
     			agg_out2alu <= 0;
     		end
-    		
     	else 
     	    begin
     	        agg_out2alu <= agg_in;
-    			agg_out2act <= agg_lsb;
+    			agg_out2act = agg_msb;
+				agg_out_acted <= ~agg_out2act;
     	    end
     	
     end
 
-    assign act_out_acted = !agg_out2act;
+    
 endmodule
