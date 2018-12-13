@@ -9,7 +9,7 @@ parameter agg_width  = 12;
 
 // agg Inputs
 reg   clk                                  = 0 ;
-reg   rst                                  = 0 ;
+reg   rst                                  = 1 ;
 reg   [agg_width-1:0]  agg_in                      = 0 ;
 
 // agg Outputs
@@ -26,7 +26,7 @@ end
 
 initial
 begin
-    #(PERIOD*2) rst  =  1;
+    #(PERIOD*2) rst  =  0;
     #15 agg_in=1;
     #15 agg_in=3;
     #15 agg_in=2;
@@ -42,7 +42,7 @@ agg #(
     .rst                     ( rst                    ),
     .agg_in                  ( agg_in         [agg_width-1:0] ),
 
-    .agg_out2alu                 ( agg_out2alu        [agg_width-1:0] ),
+    .agg_out2alu             ( agg_out2alu        [agg_width-1:0] ),
     .agg_out2act             ( agg_out2act            ),
     .agg_out_acted           ( agg_out_acted          )
 );

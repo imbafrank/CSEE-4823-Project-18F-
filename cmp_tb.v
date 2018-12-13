@@ -9,7 +9,7 @@ parameter cmp_width = 4;
 
 // cmp Inputs
 reg   clk                                  = 0 ;
-reg   rst                                  = 0 ;
+reg   rst                                  = 1 ;
 reg  [cmp_width-1:0]   cmp_in_a                      = 0 ;
 
 // cmp Outputs
@@ -24,7 +24,7 @@ end
 
 initial
 begin
-    #(PERIOD*2) rst  =  1;
+    #(PERIOD*2) rst  =  0;
     #15 cmp_in_a=1;
     #25 cmp_in_a=3;
     #35 cmp_in_a=2;

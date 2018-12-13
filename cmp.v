@@ -21,7 +21,7 @@ module cmp (clk, rst, cmp_in_a, cmp_out, cmp_b);
 
     always @(posedge clk or posedge rst)
     begin
-    	if (rst==0) 
+    	if (rst==1) 
     	    begin
     	        cmp_b <= 0;
     	    end

@@ -22,15 +22,16 @@ module agg (clk, rst, agg_in, agg_out2alu, agg_out2act, agg_out_acted);
  
     always @(posedge clk or posedge rst)
     begin
-    	if(rst==0)
+    	if(rst==1)
     		begin
     			agg_out2alu <= 0;
     		end
     	else 
     	    begin
-    	        agg_out2alu <= agg_in;
+    	       agg_out2alu <= (^agg_in===1'bx)?0:agg_in;
     			agg_out2act = agg_msb;
 				agg_out_acted <= ~agg_out2act;
+				
     	    end
     	
     end

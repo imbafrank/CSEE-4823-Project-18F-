@@ -41,7 +41,7 @@ module alu (alu_in_a_lsb, alu_in_b, alu_op, alu_out);
 
     //reg 					alu_result;
     wire [alu_width-1:0] alu_b;
-    assign alu_b = (alu_in_b>0)?alu_in_b:0;
+    assign alu_b = alu_in_b;
     
     always @(*)
     begin
