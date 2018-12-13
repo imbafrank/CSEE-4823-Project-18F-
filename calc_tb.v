@@ -1,22 +1,22 @@
 //~ `New testbench
 `timescale  1ns / 1ps
+`include "calc.v"
+module tb_calc;
 
-module tb_nn;
-
-// nn Parameters
+// calc Parameters
 parameter PERIOD     = 10;
 parameter alu_width  = 12;
-parameter agg_width  = 12;
+//parameter agg_width  = 12;
 
-// nn Inputs
+// calc Inputs
 reg   clk                                  = 0 ;
 reg   rst                                  = 1 ;
-reg   nn_1                         = 1 ;
-reg   nn_in                               = 0 ;
+reg   calc_1                         = 1 ;
+reg   calc_in                               = 0 ;
 
-// nn Outputs
-wire  [alu_width-1:0]agg_out2alu                      ;
-wire  [alu_width-1:0]alu_out                       ;
+// calc Outputs
+wire  [alu_width-1:0]   agg_out2alu                      ;
+wire                    agg_out_acted                    ;
 
 
 
@@ -28,36 +28,36 @@ end
 initial
 begin
     #(PERIOD*2) rst  =  0; 
-    #10 nn_in=0;
-    #10 nn_in=1;
-    #10 nn_in=0;
-    #10 nn_in=1;
-    #10 nn_in=1;
-    #10 nn_in=0;
+    #10 calc_in=0;
+    #10 calc_in=1;
+    #10 calc_in=0;
+    #10 calc_in=1;
+    #10 calc_in=1;
+    #10 calc_in=0;
+    #10 rst = 1;
+    #10 rst=0;calc_in=1;
+    #10 calc_in=0;
 end
 
-nn #(
+calc #(
     .alu_width ( alu_width ),
-    .agg_width ( agg_width ))
- u_nn (
+    .agg_width ( alu_width ))
+ u_calc (
     .clk                     ( clk             ),
     .rst                     ( rst             ),
-    .nn_1            ( nn_1    ),
-    .nn_in                  ( nn_in          ),
+    .calc_1            ( calc_1    ),
+    .calc_in                  ( calc_in          ),
 
-    .agg_out2alu          ( agg_out2alu [agg_width-1:0] ),
-    .alu_out          ( alu_out [agg_width-1:0] )
+    .agg_out2alu          ( agg_out2alu [alu_width-1:0] ),
+    .agg_out_acted          ( agg_out_acted )
 );
 
 initial
 begin
     $dumpfile("/home/netlab/nna/df.vcd");
-    $dumpvars(0,tb_nn);
-
-//$monitor("%d,\t%b",$time,agg_out_acted);
-    $display("\t\ttime,\tclk,\treset,\top,\t1,\tout,\taluout"); 
-    
-    $monitor("%d,\t%b,\t%b,\t%b,\t%b,\t%b,\t\t%b",$time, clk,rst,nn_in,nn_1,agg_out2alu,alu_out);
+    $dumpvars(0,tb_calc);
+    $display("\t\ttime,\tclk,\treset,\top,\t1,\tout,\tacted");   
+    $monitor("%d,\t%b,\t%b,\t%b,\t%b,\t%b,\t\t%b",$time, clk,rst,calc_in,calc_1,agg_out2alu,agg_out_acted);
     #(PERIOD*20)$finish;
 end
 
