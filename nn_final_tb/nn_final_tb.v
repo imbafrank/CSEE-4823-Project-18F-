@@ -108,6 +108,7 @@ initial begin
 		w_data <= value_read;
 		@(posedge clk);
 	end
+	$display("W1 finish loading.")
 
 	// start reading weight2
 	#10 w_sel = 1;
@@ -118,6 +119,7 @@ initial begin
 		w_data <= value_read;
 		@(posedge clk);
 	end
+	$display("W2 finish loading.")
 
 	// start reading weight3
 	#10 w_sel = 2;
@@ -128,6 +130,7 @@ initial begin
 		w_data <= value_read;
 		@(posedge clk);
 	end
+	$display("W3 finish loading.")
 
 	// start reading weight4
 	#10 w_sel = 3;
@@ -138,6 +141,7 @@ initial begin
 		w_data <= value_read;
 		@(posedge clk);
 	end
+	$display("W4 finish loading.")
 
 	// start reading input
 	#10 x_sel = 0;
@@ -148,10 +152,15 @@ initial begin
 		x_data <= value_read;
 		@(posedge clk);
 	end
+	$display("Input finish loading")
+
+	$display("Start computing")
+	#10 start_compute = 1;
+
+	
 
 
 end
-
 
 
 endmodule
