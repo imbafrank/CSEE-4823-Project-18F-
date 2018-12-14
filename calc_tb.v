@@ -55,7 +55,7 @@ calc #(
 
 initial
 begin
-    $dumpfile("/home/netlab/nna/df.vcd");
+    $dumpfile("df.vcd");
     $dumpvars(0,tb_calc);
     $display("\t\ttime,\tclk,\treset,\top,\t1,\tout,\tacted");   
     $monitor("%d,\t%b,\t%b,\t%b,\t%b,\t%b,\t\t%b",$time, clk,rst,calc_in,calc_1,agg_out2alu,agg_out_acted);
