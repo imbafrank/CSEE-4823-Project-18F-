@@ -1,5 +1,8 @@
 `timescale 1ns/1ps
+<<<<<<< HEAD
 //try
+=======
+>>>>>>> cccd9235f57619beffc24fda994f97b57d81451f
 // define state
 `define rest 0
 `define load_1 1
