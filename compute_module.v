@@ -1,28 +1,28 @@
 `timescale 1ns/1ps
 // define state
-`define rest ;
-`define load_1 ;
-`define compute_x2
-`define load_2 ;
-`define compute_x3
-`define load_3 ;
-`define comnpute_x4;
-`define load_4 ;
-`define compute_output;
-`define finish ;
+`define rest 0
+`define load_1 1
+`define compute_x2 2
+`define load_2 3
+`define compute_x3 4
+`define load_3 5
+`define comnpute_x4 6
+`define load_4 7
+`define compute_output 8
+`define finish 9
 
 module compute_module
 #(
-	parameter W_ADDR_LEN = 20;
-	parameter W_DATA_LEN = 1;
-	parameter W_SEL_LEN = 2;
-	parameter W_RW_LEN = 2;
-	parameter X_ADDR_LEN = 10;
-	parameter X_DATA_LEN = 1;
-	parameter X_SEL_LEN = 2;
-	parameter X_RW_LEN = 2;
+	parameter W_ADDR_LEN = 20,
+	parameter W_DATA_LEN = 1,
+	parameter W_SEL_LEN = 2,
+	parameter W_RW_LEN = 2,
+	parameter X_ADDR_LEN = 10,
+	parameter X_DATA_LEN = 1,
+	parameter X_SEL_LEN = 2,
+	parameter X_RW_LEN = 2,
 
-	parameter alu_width  = 12;
+	parameter alu_width  = 12
 	)
 (
 	clk,
@@ -109,6 +109,10 @@ assign x_addr = load_x_counter;
 assign x_sel = sel_x_counter;
 assign x_rw = rw_x_reg;
 
+// connect with calc
+assign calc_1 = 1;
+assign calc_in = store_weight_reg xor store_x_reg
+
 // when rest 10 cycles, go to next state. 
 assign rest_finish = rest_counter>10;
 
@@ -157,28 +161,6 @@ always @(posedge clk or posedge rst) begin
 			end
 		end
 
-		`compute: begin
-
-
-		end
-
-		`activation: begin
-			if (result_reg >= 0) begin
-				output_reg = 1;
-			end
-			else begin
-				output_reg = 0;
-			end
-			state <= `store_output;
-		end
-
-		`store_output: begin
-			output_mem[addr_input] = output_reg;
-			addr_input <= addr_input + 1;
-		end
-
-		`finish: begin
-			compute_finish <= 1;
 
 		end
 
