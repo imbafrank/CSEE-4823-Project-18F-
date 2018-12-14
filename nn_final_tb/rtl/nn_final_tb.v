@@ -1,0 +1,265 @@
+`timescale 1ns/1ps
+`define HALF_CLOCK_PERIOD #5
+`define WEIGHT_FILE "./weight.results"
+`define INPUT_FILE "./input.results"
+
+module nn_tb;
+
+parameter W_ADDR_LEN = 20;
+parameter W_DATA_LEN = 1;
+parameter W_SEL_LEN = 2;
+// parameter W_RW_LEN = 2;
+parameter X_ADDR_LEN = 10;
+parameter X_DATA_LEN = 1;
+parameter X_SEL_LEN = 2;
+// parameter X_RW_LEN = 2;
+
+integer weight_file, input_file;
+integer ret_read;
+integer i, value_read;
+
+
+reg clk, rst, rst_mem;
+reg en_compute;
+
+wire wx_write;
+wire [W_ADDR_LEN-1:0] w_addr;
+wire [W_DATA_LEN-1:0] w_data;
+wire [W_SEL_LEN-1:0] w_sel;
+// wire [W_RW_LEN-1:0] w_rw;
+wire w_rq;
+wire w_wq;
+wire [X_ADDR_LEN-1:0] x_addr;
+wire [X_DATA_LEN-1:0] x_data;
+wire [X_SEL_LEN-1:0] x_sel;
+// wire [X_RW_LEN-1:0] x_rw;
+wire x_rq;
+wire x_wq;
+
+wire wx_write_wire;
+wire [W_ADDR_LEN-1:0] w_addr_wire;
+wire [W_DATA_LEN-1:0] w_data_wire;
+wire [W_SEL_LEN-1:0] w_sel_wire;
+// wire [W_RW_LEN-1:0] w_rw_wire;
+wire w_rq_wire;
+wire w_wq_wire;
+wire [X_ADDR_LEN-1:0] x_addr_wire;
+wire [X_DATA_LEN-1:0] x_data_wire;
+wire [X_SEL_LEN-1:0] x_sel_wire;
+// wire [X_RW_LEN-1:0] x_rw_wire;
+wire x_rq_wire;
+wire x_wq_wire;
+
+reg wx_write_reg;
+reg [W_ADDR_LEN-1:0] w_addr_reg;
+reg [W_DATA_LEN-1:0] w_data_reg;
+reg [W_SEL_LEN-1:0] w_sel_reg;
+// reg [W_RW_LEN-1:0] w_rw_reg;
+reg w_rq_reg;
+reg w_wq_reg;
+reg [X_ADDR_LEN-1:0] x_addr_reg;
+reg [X_DATA_LEN-1:0] x_data_reg;
+reg [X_SEL_LEN-1:0] x_sel_reg;
+// reg [X_RW_LEN-1:0] x_rw_reg;
+reg x_rq_reg;
+reg x_wq_reg;
+
+reg load_compute_ctrl = 0;
+
+reg write_w_finish;
+reg write_x1_finish;
+
+
+mem_sys mem_sys_i
+(	
+	.clk(clk),
+	.rst(rst_mem),
+	.read_rq_x(x_rq),
+	.read_rq_w(w_rq),
+	.write_rq_x(x_wq),
+	.write_rq_w(w_wq),
+	.rw_address(w_addr),
+	.rw_address(x_addr),
+	.write_data(wx_write),
+	.read_data_x(x_data),
+	.read_data_w(w_data),
+	.sel_x(x_sel),
+	.sel_w(w_sel),
+	.vdd(1)
+	// .w_data(w_data),
+	// .w_sel(w_sel),
+	// .w_rw(w_rw)
+	);
+
+// mem_sys mem_sys_x
+// (	
+// 	.clk(clk),
+// 	.rst(rst),
+// 	.x_addr(x_addr),
+// 	.x_data(x_data),
+// 	.x_sel(x_sel),
+// 	.x_rw(x_rw)
+// 	);
+
+// compute_module compute_module_i
+// (
+// 	.clk(clk),
+// 	.rst(rst),
+// 	.en(en_compute),
+// 	.compute_finish(compute_finish),
+
+// 	.w_addr(w_addr_wire),
+// 	.w_data(w_data_wire),
+// 	.w_sel(w_sel_wire),
+// 	.w_rw(w_rw_wire),
+// 	.x_addr(x_addr_wire),
+// 	.x_data(x_data_wire),
+// 	.x_sel(x_sel_wire),
+// 	.x_rw(x_rw_wire)
+// 	)
+
+assign w_addr = load_compute_ctrl? w_addr_reg : x_addr_wire;
+assign w_data = load_compute_ctrl? w_data_reg : x_addr_wire;
+assign w_sel = load_compute_ctrl? w_sel_reg : x_addr_wire;
+// assign w_rw = load_compute_ctrl? w_rw_reg : w_rw_wire;
+assign w_rq = load_compute_ctrl? w_rq_reg : w_rq_wire;
+assign w_wq = load_compute_ctrl? w_wq_reg : w_wq_wire;
+assign x_addr = load_compute_ctrl? x_addr_reg : x_addr_wire;
+assign x_data = load_compute_ctrl? x_data_reg : x_data_wire;
+assign x_sel = load_compute_ctrl? x_sel_reg : x_sel_wire;
+// assign x_rw = load_compute_ctrl? x_rw_reg : x_rw_wire;
+assign x_rq = load_compute_ctrl? x_rq_reg : x_rq_wire;
+assign x_wq = load_compute_ctrl? x_wq_reg : x_wq_wire;
+
+always begin
+  `HALF_CLOCK_PERIOD;
+  clk = ~clk;
+end
+
+initial begin
+	clk = 0;
+	rst = 0;
+	rst_mem = 0;
+
+	wx_write_reg = 0;
+
+	w_addr_reg = 0;
+	w_data_reg = 0;
+	w_sel_reg = 0;
+	// w_rw = 0;
+	w_rq_reg = 0;
+	w_wq_reg = 0;
+
+	x_addr_reg = 0;
+	x_data_reg = 0;
+	x_sel_reg = 0;
+	// x_rw = 0;
+	x_rq_reg = 0;
+	x_wq_reg = 0;
+
+	// load mode: load data from external into memory
+	load_compute_ctrl = 1;
+
+	// en_compute = 0;
+	// start_compute = 0;
+
+	weight_file = $fopen(`WEIGHT_FILE,"r");
+	if (!weight_file)
+	begin
+		$display("Couldn't open the weight file.");
+		$finish;
+	end
+	else begin
+		$display("Weight file opened.");
+	end
+
+	input_file = $fopen(`WEIGHT_FILE,"r");
+	if (!input_file)
+	begin
+		$display("Couldn't open the input file.");
+		$finish;
+	end
+	else begin
+		$display("Input file opened.");
+	end
+
+	// reset mem
+	#10 rst_mem = 1;
+
+	// start read weight
+	#10;
+	w_rq_reg = 0;
+	w_wq_reg = 1;
+	x_rq_reg = 0;
+	x_wq_reg = 0;
+	// start reading weight1
+	#10 w_sel_reg = 0;
+	@(posedge);
+	for (i=0; i<8; i=i+1) begin
+		ret_read = $fscanf(weight_file, "%d", value_read);
+		w_addr_reg <= i;
+		wx_write_reg <= value_read;
+		@(posedge clk);
+	end
+	$display("W1 finish loading.")
+
+	// start reading weight2
+	#10 w_sel_reg = 1;
+	@(posedge);
+	for (i=0; i<8; i=i+1) begin
+		ret_read = $fscanf(weight_file, "%d", value_read);
+		w_addr_reg <= i;
+		wx_write_reg <= value_read;
+		@(posedge clk);
+	end
+	$display("W2 finish loading.")
+
+	// start reading weight3
+	#10 w_sel_reg = 2;
+	@(posedge);
+	for (i=0; i<8; i=i+1) begin
+		ret_read = $fscanf(weight_file, "%d", value_read);
+		w_addr_reg <= i;
+		wx_write_reg <= value_read;
+		@(posedge clk);
+	end
+	$display("W3 finish loading.")
+
+	// start reading weight4
+	#10 w_sel_reg = 3;
+	@(posedge);
+	for (i=0; i<8; i=i+1) begin
+		ret_read = $fscanf(weight_file, "%d", value_read);
+		w_addr_reg <= i;
+		wx_write_reg <= value_read;
+		@(posedge clk);
+	end
+	$display("W4 finish loading.")
+
+	// start reading input
+	#10;
+	w_rq_reg = 0;
+	w_wq_reg = 0;
+	x_rq_reg = 0;
+	x_wq_reg = 1;
+
+	#10 x_sel = 0;
+	@(posedge);
+	for (i=0; i<8; i=i+1) begin
+		ret_read = $fscanf(input_file, "%d", value_read);
+		x_addr_reg <= i;
+		wx_write_reg <= value_read;
+		@(posedge clk);
+	end
+	$display("Input finish loading")
+
+	$display("Start computing")
+	#10 start_compute = 1;
+
+	
+
+
+end
+
+
+endmodule
