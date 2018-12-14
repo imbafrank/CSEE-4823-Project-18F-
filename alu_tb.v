@@ -1,4 +1,4 @@
-//~ `New testbench
+`include "alu.v"
 `timescale  1ns / 1ps
 
 module tb_alu;
@@ -11,7 +11,8 @@ parameter alu_width  = 12;
 reg   clk                                  = 0 ;
 reg   rst                                  = 0 ;
 reg   alu_in_a_lsb                         = 0 ;
-reg   alu_op                               = 0 ;
+reg   alu_in_x                              = 0 ;
+reg   alu_in_w                              = 0 ;
 reg   [alu_width-1:0]  alu_in_b                    = 0 ;
 
 // alu Outputs
@@ -22,7 +23,8 @@ wire  [alu_width-1:0]  alu_out                     ;
 initial
 begin
     #10 rst  =  1;
-    #10 alu_op=0;alu_in_a_lsb=1;alu_in_b=0;
+    #10 alu_in_x//alu_op=0;
+    alu_in_a_lsb=1;alu_in_b=0;
     #10 alu_op=0;alu_in_a_lsb=1;alu_in_b=1;
     #10 alu_op=0;alu_in_a_lsb=0;alu_in_b=2;
     #10 alu_op=0;alu_in_a_lsb=1;alu_in_b=3;
@@ -39,7 +41,8 @@ alu #(
     .alu_width ( alu_width ))
  u_alu (
     .alu_in_a_lsb            ( alu_in_a_lsb          ),
-    .alu_op                  ( alu_op                ),
+    .alu_in_x                  ( alu_x                ),
+    .alu_w                  ( alu_w                ),
     .alu_in_b                ( alu_in_b      [alu_width-1:0] ),
 
     .alu_out                 ( alu_out       [alu_width-1:0] )
@@ -50,8 +53,8 @@ begin
 
     $dumpfile("/home/netlab/nna/df.vcd");
     $dumpvars(0, tb_alu);
-    $display("\t\ttime,\tclk,\treset,\top,\ta,\tb,\tout"); 
-    $monitor("%d,\t%b,\t%b,\t%b,\t%b,\t%b",$time, clk,rst,alu_op, alu_in_a_lsb, alu_in_b,alu_out); 
+    $display("\t\ttime,\tclk,\treset,\tx,\tw,\ta,\tb,\tout"); 
+    $monitor("%d,\t%b,\t%b,\t%b,\t%b,\t%b,\t%b",$time, clk,rst,alu_x,alu_w, alu_in_a_lsb, alu_in_b,alu_out); 
     #100$finish;
 end
 
