@@ -18,10 +18,10 @@ module calc (clk, rst, calc_1, calc_in, agg_out2alu, agg_out_acted);
 /*Contol Signal*/
 
 //alu 
-    
-	input 				calc_1, calc_in;
+	input 				                calc_1, calc_in;
 //agg 
-	input               clk, rst ;
+	input                               clk, rst ;
+
 	output [alu_width-1:0]				agg_out2alu;
 	output                              agg_out_acted;
 /*Instantiate Module*/
@@ -33,10 +33,10 @@ module calc (clk, rst, calc_1, calc_in, agg_out2alu, agg_out_acted);
 // alu Inputs
 //reg   alu_in_a_lsb;
 //reg   alu_op;
-    reg   signed[alu_width-1:0]             alu_in_b;
+    reg   signed[alu_width-1:0]         alu_in_b;
 
 // alu Outputs
-    wire  signed[alu_width-1:0]     alu_out;
+    wire  signed[alu_width-1:0]         alu_out;
 
 alu #(
     .alu_width ( alu_width ))
@@ -69,7 +69,7 @@ agg #(
     .agg_in                  ( alu_out [alu_width-1:0]          ),
 
     .agg_out_acted           ( agg_out_acted   ),
-    .agg_out2act             ( agg_out2act     ),
+    //.agg_out2act             ( agg_out2act     ),
     .agg_out2alu             ( agg_out2alu [agg_width-1:0]  )
 );
 
