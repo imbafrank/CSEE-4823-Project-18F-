@@ -1,7 +1,10 @@
 `timescale 1ns/1ps
 `define HALF_CLOCK_PERIOD #5
-`define WEIGHT_FILE "./weight.results"
-`define INPUT_FILE "./input.results"
+`define WEIGHT1_FILE "../rtl/weight1.results"
+`define WEIGHT2_FILE "../rtl/weight2.results"
+`define WEIGHT3_FILE "../rtl/weight3.results"
+`define WEIGHT4_FILE "../rtl/weight4.results"
+`define INPUT_FILE "../rtl/input.results"
 
 module nn_tb;
 
@@ -14,7 +17,7 @@ parameter X_DATA_LEN = 1;
 parameter X_SEL_LEN = 2;
 // parameter X_RW_LEN = 2;
 
-integer weight_file, input_file;
+integer weight1_file, weight2_file, weight3_file, weight4_file, input_file;
 integer ret_read;
 integer i, value_read;
 
@@ -79,7 +82,7 @@ mem_sys mem_sys_i
 	.write_rq_x(x_wq),
 	.write_rq_w(w_wq),
 	.rw_address(w_addr),
-	.rw_address(x_addr),
+	.rw_address_x(x_addr),
 	.write_data(wx_write),
 	.read_data_x(x_data),
 	.read_data_w(w_data),
@@ -117,6 +120,7 @@ mem_sys mem_sys_i
 // 	.x_sel(x_sel_wire),
 // 	.x_rw(x_rw_wire)
 // 	)
+assign wx_write = load_compute_ctrl? wx_write_reg : wx_write_wire;
 
 assign w_addr = load_compute_ctrl? w_addr_reg : x_addr_wire;
 assign w_data = load_compute_ctrl? w_data_reg : x_addr_wire;
@@ -124,6 +128,7 @@ assign w_sel = load_compute_ctrl? w_sel_reg : x_addr_wire;
 // assign w_rw = load_compute_ctrl? w_rw_reg : w_rw_wire;
 assign w_rq = load_compute_ctrl? w_rq_reg : w_rq_wire;
 assign w_wq = load_compute_ctrl? w_wq_reg : w_wq_wire;
+
 assign x_addr = load_compute_ctrl? x_addr_reg : x_addr_wire;
 assign x_data = load_compute_ctrl? x_data_reg : x_data_wire;
 assign x_sel = load_compute_ctrl? x_sel_reg : x_sel_wire;
@@ -163,17 +168,47 @@ initial begin
 	// en_compute = 0;
 	// start_compute = 0;
 
-	weight_file = $fopen(`WEIGHT_FILE,"r");
-	if (!weight_file)
+	weight1_file = $fopen(`WEIGHT1_FILE,"r");
+	if (!weight1_file)
 	begin
 		$display("Couldn't open the weight file.");
 		$finish;
 	end
 	else begin
-		$display("Weight file opened.");
+		$display("Weight1 file opened.");
 	end
 
-	input_file = $fopen(`WEIGHT_FILE,"r");
+	weight2_file = $fopen(`WEIGHT2_FILE,"r");
+	if (!weight2_file)
+	begin
+		$display("Couldn't open the weight file.");
+		$finish;
+	end
+	else begin
+		$display("Weight2 file opened.");
+	end
+
+	weight3_file = $fopen(`WEIGHT3_FILE,"r");
+	if (!weight3_file)
+	begin
+		$display("Couldn't open the weight file.");
+		$finish;
+	end
+	else begin
+		$display("Weight3 file opened.");
+	end
+
+	weight4_file = $fopen(`WEIGHT4_FILE,"r");
+	if (!weight4_file)
+	begin
+		$display("Couldn't open the weight file.");
+		$finish;
+	end
+	else begin
+		$display("Weight4 file opened.");
+	end
+
+	input_file = $fopen(`INPUT_FILE,"r");
 	if (!input_file)
 	begin
 		$display("Couldn't open the input file.");
@@ -194,47 +229,47 @@ initial begin
 	x_wq_reg = 0;
 	// start reading weight1
 	#10 w_sel_reg = 0;
-	@(posedge);
-	for (i=0; i<8; i=i+1) begin
-		ret_read = $fscanf(weight_file, "%d", value_read);
+	@(posedge clk);
+	for (i=0; i<300; i=i+1) begin
+		ret_read = $fscanf(weight1_file, "%d", value_read);
 		w_addr_reg <= i;
 		wx_write_reg <= value_read;
 		@(posedge clk);
 	end
-	$display("W1 finish loading.")
+	$display("W1 finish loading.");
 
 	// start reading weight2
 	#10 w_sel_reg = 1;
-	@(posedge);
-	for (i=0; i<8; i=i+1) begin
-		ret_read = $fscanf(weight_file, "%d", value_read);
+	@(posedge clk);
+	for (i=0; i<300; i=i+1) begin
+		ret_read = $fscanf(weight2_file, "%d", value_read);
 		w_addr_reg <= i;
 		wx_write_reg <= value_read;
 		@(posedge clk);
 	end
-	$display("W2 finish loading.")
+	$display("W2 finish loading.");
 
 	// start reading weight3
 	#10 w_sel_reg = 2;
-	@(posedge);
-	for (i=0; i<8; i=i+1) begin
-		ret_read = $fscanf(weight_file, "%d", value_read);
+	@(posedge clk);
+	for (i=0; i<300; i=i+1) begin
+		ret_read = $fscanf(weight3_file, "%d", value_read);
 		w_addr_reg <= i;
 		wx_write_reg <= value_read;
 		@(posedge clk);
 	end
-	$display("W3 finish loading.")
+	$display("W3 finish loading.");
 
 	// start reading weight4
 	#10 w_sel_reg = 3;
-	@(posedge);
-	for (i=0; i<8; i=i+1) begin
-		ret_read = $fscanf(weight_file, "%d", value_read);
+	@(posedge clk);
+	for (i=0; i<300; i=i+1) begin
+		ret_read = $fscanf(weight4_file, "%d", value_read);
 		w_addr_reg <= i;
 		wx_write_reg <= value_read;
 		@(posedge clk);
 	end
-	$display("W4 finish loading.")
+	$display("W4 finish loading.");
 
 	// start reading input
 	#10;
@@ -243,19 +278,19 @@ initial begin
 	x_rq_reg = 0;
 	x_wq_reg = 1;
 
-	#10 x_sel = 0;
-	@(posedge);
+	#10 x_sel_reg = 0;
+	@(posedge clk);
 	for (i=0; i<8; i=i+1) begin
 		ret_read = $fscanf(input_file, "%d", value_read);
 		x_addr_reg <= i;
 		wx_write_reg <= value_read;
 		@(posedge clk);
 	end
-	$display("Input finish loading")
+	$display("Input finish loading");
 
-	$display("Start computing")
-	#10 start_compute = 1;
-
+	// $display("Start computing");
+	// #10 start_compute = 1;
+	$finish;
 	
 
 
