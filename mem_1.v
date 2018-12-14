@@ -77,7 +77,6 @@ input      write_data;
 output     read_data;
 
 reg     read_data;
-
 integer out, i;
 reg [1023:0] memory_ram_d;
 reg [1023:0] memory_ram_q;
@@ -106,6 +105,8 @@ begin
         memory_ram_d[rw_address] = write_data;
     if (!write_rq && read_rq && en)
         read_data = memory_ram_q[rw_address];
+    else 
+        read_data = 1'bz;
 end
 
 endmodule
@@ -160,6 +161,9 @@ begin
         memory_ram_d[rw_address] = write_data;
     if  (!write_rq && read_rq && en)
         read_data = memory_ram_q[rw_address];
+    else
+        read_data = 1'bz;
+
 end
 
 endmodule
@@ -180,9 +184,11 @@ module mem_sys(
     read_data_x,
     read_data_w,
     sel_x,
-    sel_w
+    sel_w,
+    vdd
 );
 
+input		vdd;
 input[1:0]	sel_x;
 input[1:0]      sel_w;
 input           clk;
@@ -209,7 +215,7 @@ wire    sel_w_3;
 
 
 demux1to4 sel_for_x(
-    .Data_in(1),
+    .Data_in(vdd),
     .sel(sel_x),
     .Data_out_0(sel_x_0),
     .Data_out_1(sel_x_1),
@@ -218,7 +224,7 @@ demux1to4 sel_for_x(
 );
 
 demux1to4 sel_for_w(
-    .Data_in(1),
+    .Data_in(vdd),
     .sel(sel_w),
     .Data_out_0(sel_w_0),
     .Data_out_1(sel_w_1),
@@ -314,7 +320,7 @@ mem_large mem_for_w3(
 
 );
 
-mem_medium mem_for_w4(
+mem_large mem_for_w4(
     .clk(clk),
     .rst(rst),
     .rw_address(rw_address),
