@@ -2,14 +2,14 @@
 // `include "calc.v"
 // define state
 `define rest 0
-`define load_1 1
-`define compute_x2 2
-`define load_2 3
-`define compute_x3 4
-`define load_3 5
-`define comnpute_x4 6
-`define load_4 7
-`define compute_output 8
+`define layer_1 1
+`define store_x2 2
+`define layer_2 3
+`define store_x3 4
+`define layer_3 5
+`define store_x4 6
+`define layer_4 7
+`define store_output 8
 `define finish 9
 
 module compute_module
@@ -22,7 +22,15 @@ module compute_module
 	parameter X_DATA_LEN = 1,
 	parameter X_SEL_LEN = 2,
 	parameter X_RW_LEN = 2,
-
+	parameter W1_LEN = 802816,
+	parameter X1_LEN = 784,
+	parameter W2_LEN = 1048576,
+	parameter X2_LEN = 1024,
+	parameter W3_LEN = 1048576,
+	parameter X3_LEN = 1024,
+	parameter W4_LEN = 10240,
+	parameter X4_LEN = 1024,
+	parameter OUTPUT_LEN = 10,
 	parameter alu_width  = 12
 	)
 (
@@ -101,20 +109,23 @@ reg [X_DATA_LEN-1:0] store_x_reg=0;
 // reg [X_RW_LEN-1:0] rw_x_reg;
 
 // reg store calc output
-reg agg_out_reg;
+reg agg_out_reg=0;
 
 // layer finish mark
-reg layer1_finish;
+reg layer1_finish=0;
+reg layer2_finish=0;
+reg layer3_finish=0;
+reg layer4_finish=0;
 
 // state
-reg [2:0] state;
+reg [3:0] state=`rest;
 
 // rest state counter
-reg [3:0] rest_counter;
+reg [3:0] rest_counter=0;
 wire rest_finish;
 
 // activation result reg
-reg output_reg;
+reg output_reg=0;
 
 // tmp regs: representing memory block
 // reg 
@@ -165,7 +176,7 @@ always @(posedge clk) begin
 		case (state)
 		`rest:	begin
 			if (rest_finish==1) begin
-				state <= `load_1;
+				state <= `layer_1;
 				rest_counter <= 0;
 			end
 			else begin
@@ -174,7 +185,7 @@ always @(posedge clk) begin
 			end
 		end
 
-		`load_1: begin
+		`layer_1: begin
 			calc_rst <= 0;
 			sel_weight_counter <= 0;
 			sel_x_counter <= 0;
@@ -198,19 +209,19 @@ always @(posedge clk) begin
 
 
 
-			if (load_weight_counter >= 802816 && load_x_counter >= 784) begin
-				state <= `compute_x2;
+			if (load_x_counter >= (X1_LEN-1) && load_weight_counter >= (W1_LEN-1)) begin
+				state <= `store_x2;
 				load_x_counter <= 0;
 				layer1_finish <= 1;
 				load_weight_counter <= 0;
 			end
-			else if (load_x_counter >= 784 && load_weight_counter < 802816) begin
-				state <= `compute_x2;
+			else if (load_x_counter >= (X1_LEN-1) && load_weight_counter < (W1_LEN-1)) begin
+				state <= `store_x2;
 				load_x_counter <= 0;
 				layer1_finish <= 0;
 			end
 			else begin
-				state <= `load_1;
+				state <= `layer_1;
 			end
 
 			// if (load_weight_counter >= 802816) begin
@@ -218,7 +229,7 @@ always @(posedge clk) begin
 			// end
 		end
 
-		`compute_x2: begin
+		`store_x2: begin
 			sel_x_counter <= 1;
 			w_rq_reg <= 0;
 			w_wq_reg <= 0;
@@ -233,17 +244,213 @@ always @(posedge clk) begin
 			agg_out_reg <= agg_out_acted;
 			wx_write_reg <= agg_out_reg;
 			if (layer1_finish==1) begin
-				state <= `load_2;
+				state <= `layer_2;
+				store_x_counter <= 0;
+				$display("layer1 finish");
 			end
 			else begin
-				state <= `load_1;
+				state <= `layer_1;
 			end
+		end
+
+		`layer_2: begin
+			// $display("finish!!!");
+			// $finish;
+			calc_rst <= 0;
+			sel_weight_counter <= 1;
+			sel_x_counter <= 1;
+			rest_counter <= 0;
+			// rw_w_reg <= 1;
+			// rw_x_reg <= 1;
+			w_rq_reg <= 1;
+			w_wq_reg <= 0;
+			x_rq_reg <= 1;
+			x_wq_reg <= 0;
+
+			r_or_w <= 1;
+			layer2_finish <= 0;
+
+			store_weight_reg <= w_data;
+			store_x_reg <= x_data;
+
+
+			load_weight_counter <= load_weight_counter + 1;
+			load_x_counter <= load_x_counter + 1;
+
+
+
+			if (load_x_counter >= (X2_LEN-1) && load_weight_counter >= (W2_LEN-1)) begin
+				state <= `store_x3;
+				load_x_counter <= 0;
+				layer2_finish <= 1;
+				load_weight_counter <= 0;
+			end
+			else if (load_x_counter >= (X2_LEN-1) && load_weight_counter < (W2_LEN-1)) begin
+				state <= `store_x3;
+				load_x_counter <= 0;
+				layer2_finish <= 0;
+			end
+			else begin
+				state <= `layer_2;
+			end
+		end
+
+		`store_x3: begin
+			sel_x_counter <= 2;
+			w_rq_reg <= 0;
+			w_wq_reg <= 0;
+			x_rq_reg <= 0;
+			x_wq_reg <= 1;
 			
+			calc_rst <= 1;
+		
+			r_or_w <= 0;
+			store_x_counter <= store_x_counter + 1;
+			// agg_out_reg is redundent. 
+			agg_out_reg <= agg_out_acted;
+			wx_write_reg <= agg_out_reg;
+			if (layer2_finish==1) begin
+				state <= `layer_3;
+				store_x_counter <= 0;
+				$display("layer2 finish");
+			end
+			else begin
+				state <= `layer_2;
+			end
 		end
-		`load_2: begin
-			$display("finish!!!");
-			$finish;
+
+		`layer_3: begin
+			// $display("finish!!!");
+			// $finish;
+			calc_rst <= 0;
+			sel_weight_counter <= 2;
+			sel_x_counter <= 2;
+			rest_counter <= 0;
+			// rw_w_reg <= 1;
+			// rw_x_reg <= 1;
+			w_rq_reg <= 1;
+			w_wq_reg <= 0;
+			x_rq_reg <= 1;
+			x_wq_reg <= 0;
+
+			r_or_w <= 1;
+			layer3_finish <= 0;
+
+			store_weight_reg <= w_data;
+			store_x_reg <= x_data;
+
+
+			load_weight_counter <= load_weight_counter + 1;
+			load_x_counter <= load_x_counter + 1;
+
+
+
+			if (load_x_counter >= (X3_LEN-1) && load_weight_counter >= (W3_LEN-1)) begin
+				state <= `store_x4;
+				load_x_counter <= 0;
+				layer3_finish <= 1;
+				load_weight_counter <= 0;
+			end
+			else if (load_x_counter >= (X3_LEN-1) && load_weight_counter < (W3_LEN-1)) begin
+				state <= `store_x4;
+				load_x_counter <= 0;
+				layer3_finish <= 0;
+			end
+			else begin
+				state <= `layer_3;
+			end
 		end
+
+		`store_x4: begin
+			sel_x_counter <= 3;
+			w_rq_reg <= 0;
+			w_wq_reg <= 0;
+			x_rq_reg <= 0;
+			x_wq_reg <= 1;
+			
+			calc_rst <= 1;
+		
+			r_or_w <= 0;
+			store_x_counter <= store_x_counter + 1;
+			// agg_out_reg is redundent. 
+			agg_out_reg <= agg_out_acted;
+			wx_write_reg <= agg_out_reg;
+			if (layer3_finish==1) begin
+				state <= `layer_4;
+				store_x_counter <= 0;
+				$display("layer3 finish");
+			end
+			else begin
+				state <= `layer_3;
+			end
+		end
+
+		`layer_4: begin
+			// $display("finish!!!");
+			// $finish;
+			calc_rst <= 0;
+			sel_weight_counter <= 3;
+			sel_x_counter <= 3;
+			rest_counter <= 0;
+			// rw_w_reg <= 1;
+			// rw_x_reg <= 1;
+			w_rq_reg <= 1;
+			w_wq_reg <= 0;
+			x_rq_reg <= 1;
+			x_wq_reg <= 0;
+
+			r_or_w <= 1;
+			layer4_finish <= 0;
+
+			store_weight_reg <= w_data;
+			store_x_reg <= x_data;
+
+
+			load_weight_counter <= load_weight_counter + 1;
+			load_x_counter <= load_x_counter + 1;
+
+
+
+			if (load_x_counter >= (X4_LEN-1) && load_weight_counter >= (W4_LEN-1)) begin
+				state <= `store_output;
+				load_x_counter <= 0;
+				layer4_finish <= 1;
+				load_weight_counter <= 0;
+			end
+			else if (load_x_counter >= (X4_LEN-1) && load_weight_counter < (W4_LEN-1)) begin
+				state <= `store_output;
+				load_x_counter <= 0;
+				layer4_finish <= 0;
+			end
+			else begin
+				state <= `layer_4;
+			end
+		end
+
+		`store_output: begin
+			// sel_x_counter <= 3;
+			// w_rq_reg <= 0;
+			// w_wq_reg <= 0;
+			// x_rq_reg <= 0;
+			// x_wq_reg <= 1;
+			
+			calc_rst <= 1;
+		
+			// r_or_w <= 0;
+			// store_x_counter <= store_x_counter + 1;
+			// // agg_out_reg is redundent. 
+			agg_out_reg <= agg_out_acted;
+			wx_write_reg <= agg_out_reg;
+			$display("%d", wx_write_reg);
+			if (layer4_finish==1) begin
+				// state <= `layer_4;
+				$finish;
+			end
+			else begin
+				state <= `layer_4;
+			end
+		end
+
 	endcase
 	end
 	
