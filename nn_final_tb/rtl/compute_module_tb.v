@@ -1,5 +1,5 @@
 `timescale 1ns / 1ps
-define `HALF_CLOCK_PERIOD  #5
+`define `HALF_CLOCK_PERIOD  #5
 
 module compute_module_tb;
 
@@ -15,7 +15,7 @@ parameter alu_width  = 12;
 
 reg rst;
 reg clk;
-
+reg en;
 // control signal from tb
 reg start_compute;
 // output reg compute_finish;
@@ -61,7 +61,7 @@ end
 
 initial begin
 	// #10 x_1 = 1;
-	ctrl = 1;
+	// ctrl = 1;
 
 	#50 en = 1;
 
