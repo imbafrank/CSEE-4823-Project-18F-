@@ -25,7 +25,8 @@ module alu (alu_in_a_lsb, alu_op, alu_in_b, alu_out);
     
     always @(*)
     begin
-    	case (alu_op) 
+    	alu_out = 0;
+		case (alu_op) 
     	    `alu_op_add1:
     	        begin
     	            alu_out = alu_b+alu_in_a_lsb;			
@@ -34,10 +35,10 @@ module alu (alu_in_a_lsb, alu_op, alu_in_b, alu_out);
     	        begin
     	            alu_out = alu_b-alu_in_a_lsb;
     	        end
-    	    default:
-    	        begin
-    	            alu_out = 0; 
-    	        end
+    	    // default:
+    	    //     begin
+    	    //         alu_out = 0; 
+    	    //     end
     	endcase
 
     end
