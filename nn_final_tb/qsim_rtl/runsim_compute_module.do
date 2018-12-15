@@ -9,6 +9,9 @@ vmap work work
 # Include Netlist
 vlog -incr ../rtl/compute_module.v
 #vlog -incr ../rtl/mem_1.v
+vlog -incr ../rtl/calc.v
+vlog -incr ../rtl/agg.v
+vlog -incr ../rtl/alu.v
 
 # Include Testbench
 vlog -incr ../rtl/compute_module_tb.v

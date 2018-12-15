@@ -1,4 +1,5 @@
 `timescale 1ns/1ps
+// `include "calc.v"
 // define state
 `define rest 0
 `define load_1 1
@@ -49,8 +50,8 @@ input wire rst;
 input wire clk;
 input wire en;
 // control signal from tb
-input wire start_compute;
-// output reg compute_finish;
+// input wire start_compute;
+output reg compute_finish;
 
 // signal to mem
 inout wire wx_write;
@@ -110,7 +111,7 @@ reg [2:0] state;
 
 // rest state counter
 reg [3:0] rest_counter;
-reg rest_finish;
+wire rest_finish;
 
 // activation result reg
 reg output_reg;
@@ -176,6 +177,7 @@ always @(posedge clk) begin
 		`load_1: begin
 			sel_weight_counter <= 0;
 			sel_x_counter <= 0;
+			rest_counter <= 0;
 			// rw_w_reg <= 1;
 			// rw_x_reg <= 1;
 			w_rq_reg <= 1;
@@ -224,7 +226,7 @@ always @(posedge clk) begin
 			agg_out_reg <= agg_out_acted;
 			store_x_reg <= agg_out_reg;
 		end
-
+	endcase
 	end
 	
 end
