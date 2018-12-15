@@ -147,7 +147,7 @@ assign rest_finish = rest_counter>10;
 always @(posedge clk) begin
 	if (en==0) begin
 		// reset
-    	state <= rest;
+    	state <= `rest;
     	rest_counter <= 4'd0;
     	addr_weight <= W_ADDR_LEN'b0;
     	addr_input <= I_ADDR_LEN'b0;

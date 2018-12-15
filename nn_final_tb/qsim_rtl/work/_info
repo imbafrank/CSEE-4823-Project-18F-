@@ -1,0 +1,114 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 d/user/stud/fall18/dw2773/advanced_logic/CSEE-4823-Project-18F-/nn_final_tb/qsim_rtl
+vagg
+Z1 !s10a 1544838296
+Z2 !s110 1544838429
+!i10b 1
+!s100 1lUhTU0RN9Y]P>0J@4J^21
+I9h1T=RDmYnN4:KJIa<`0A0
+Z3 V`JN@9S9cnhjKRR_L]QIcM3
+R0
+Z4 w1544838296
+8../rtl/agg.v
+F../rtl/agg.v
+L0 13
+Z5 OL;L;10.3d;59
+r1
+!s85 0
+31
+!s108 1544838429.536277
+!s107 ../rtl/agg.v|
+!s90 -reportprogress|300|-incr|../rtl/agg.v|
+!i113 1
+Z6 o-L mtiAvm -L mtiOvm -L mtiUvm -L mtiUPF -L infact
+valu
+!s10a 1544838416
+R2
+!i10b 1
+!s100 eYhjzaZI:P56cW1>PK=IB1
+I=M?DH>N:eN6^QVdR9PT[L3
+R3
+R0
+w1544838416
+8../rtl/alu.v
+F../rtl/alu.v
+L0 16
+R5
+r1
+!s85 0
+31
+!s108 1544838429.421466
+!s107 ../rtl/alu.v|
+!s90 -reportprogress|300|-incr|../rtl/alu.v|
+!i113 1
+R6
+vcalc
+R1
+R2
+!i10b 1
+!s100 _FRBI5M<e@C3:^QnR[4Ca0
+IEGgH`d>AJhFTHnU7ARKkg0
+R3
+R0
+R4
+8../rtl/calc.v
+F../rtl/calc.v
+L0 17
+R5
+r1
+!s85 0
+31
+!s108 1544838429.670453
+!s107 ../rtl/alu.v|../rtl/agg.v|../rtl/calc.v|
+!s90 -reportprogress|300|-incr|../rtl/calc.v|
+!i113 1
+R6
+vcompute_module
+!s10a 1544841989
+!s110 1544841993
+!i10b 1
+!s100 ETSJda=h4e8g`?OLFj`mh1
+Ig6NNK?b_C@dO]<;PzQ8N20
+R3
+R0
+w1544841989
+8../rtl/compute_module.v
+F../rtl/compute_module.v
+L0 15
+R5
+r1
+!s85 0
+31
+!s108 1544841992.991627
+!s107 ../rtl/compute_module.v|
+!s90 -reportprogress|300|-incr|../rtl/compute_module.v|
+!i113 1
+R6
+vcompute_module_tb
+!s110 1544842284
+!i10b 1
+!s100 =WSU[ij[:VQ7P[7UHUOfh0
+IVC5gDU@]VbIX<Kz[Ba[h@0
+R3
+R0
+w1544842281
+8../rtl/compute_module_tb.v
+F../rtl/compute_module_tb.v
+L0 4
+R5
+r1
+!s85 0
+31
+!s108 1544842284.291429
+!s107 ../rtl/compute_module_tb.v|
+!s90 -reportprogress|300|-incr|../rtl/compute_module_tb.v|
+!i113 1
+R6

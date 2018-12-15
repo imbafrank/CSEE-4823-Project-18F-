@@ -13,9 +13,9 @@ parameter X_SEL_LEN = 2;
 parameter X_RW_LEN = 2;
 parameter alu_width  = 12;
 
-reg rst;
-reg clk;
-reg en;
+reg rst=0;
+reg clk=0;
+reg en=0;
 // control signal from tb
 reg start_compute;
 // output reg compute_finish;
@@ -23,24 +23,27 @@ reg start_compute;
 // signal to mem
 wire wx_write;
 wire [W_ADDR_LEN-1:0] w_addr;
-reg [W_DATA_LEN-1:0] w_data;
+wire [W_DATA_LEN-1:0] w_data;
 wire [W_SEL_LEN-1:0] w_sel;
 // output [W_RW_LEN-1:0] w_rw;
 wire w_rq;
 wire w_wq;
 wire [X_ADDR_LEN-1:0] x_addr;
-reg [X_DATA_LEN-1:0] x_data;
+wire [X_DATA_LEN-1:0] x_data;
 wire [X_SEL_LEN-1:0] x_sel;
 // output [X_RW_LEN-1:0] x_rw;
 wire x_rq;
 wire x_wq;
-
+// comes from mem
+assign w_data = 1;
+assign x_data = 1;
 compute_module compute_module_i
 (
 	.clk(clk),
 	.rst(rst),
 	.en(en),
 	.compute_finish(compute_finish),
+	.wx_write(wx_write),
 	.w_addr(w_addr),
 	.w_data(w_data),
 	.w_sel(w_sel),
