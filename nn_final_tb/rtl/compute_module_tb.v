@@ -1,5 +1,5 @@
 `timescale 1ns / 1ps
-`define `HALF_CLOCK_PERIOD  #5
+`define HALF_CLOCK_PERIOD  #5
 
 module compute_module_tb;
 
@@ -21,19 +21,19 @@ reg start_compute;
 // output reg compute_finish;
 
 // signal to mem
-reg wx_write;
-reg [W_ADDR_LEN-1:0] w_addr;
+wire wx_write;
+wire [W_ADDR_LEN-1:0] w_addr;
 reg [W_DATA_LEN-1:0] w_data;
-reg [W_SEL_LEN-1:0] w_sel;
+wire [W_SEL_LEN-1:0] w_sel;
 // output [W_RW_LEN-1:0] w_rw;
-reg w_rq;
-reg w_wq;
-reg [X_ADDR_LEN-1:0] x_addr;
+wire w_rq;
+wire w_wq;
+wire [X_ADDR_LEN-1:0] x_addr;
 reg [X_DATA_LEN-1:0] x_data;
-reg [X_SEL_LEN-1:0] x_sel;
+wire [X_SEL_LEN-1:0] x_sel;
 // output [X_RW_LEN-1:0] x_rw;
-reg x_rq;
-reg x_wq;
+wire x_rq;
+wire x_wq;
 
 compute_module compute_module_i
 (
