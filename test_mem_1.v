@@ -1,3 +1,5 @@
+`timescale 10us/10us
+
 `define MATLAB_OUT_FN "../test_input_1.results"
 
 module memory_tb();

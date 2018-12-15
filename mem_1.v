@@ -1,3 +1,5 @@
+`timescale 10us/10us
+
 module demux1to4(
      Data_in,
      sel,
