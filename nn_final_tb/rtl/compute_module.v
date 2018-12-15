@@ -54,22 +54,22 @@ input wire en;
 output reg compute_finish;
 
 // signal to mem
-inout wire wx_write;
+output wire wx_write;
 output wire [W_ADDR_LEN-1:0] w_addr;
-inout wire [W_DATA_LEN-1:0] w_data;
+input wire [W_DATA_LEN-1:0] w_data;
 output wire [W_SEL_LEN-1:0] w_sel;
 // output [W_RW_LEN-1:0] w_rw;
 output wire w_rq;
 output wire w_wq;
 output wire [X_ADDR_LEN-1:0] x_addr;
-inout wire [X_DATA_LEN-1:0] x_data;
+input wire [X_DATA_LEN-1:0] x_data;
 output wire [X_SEL_LEN-1:0] x_sel;
 // output [X_RW_LEN-1:0] x_rw;
 output wire x_rq;
 output wire x_wq;
 
 // signal to calc
-wire calc_rst;
+reg calc_rst=0;
 wire calc_1;
 wire calc_in;
 wire [alu_width-1:0] agg_out2alu;
@@ -123,13 +123,13 @@ reg output_reg;
 assign wx_write = wx_write_reg;
 assign w_addr = load_weight_counter;
 assign w_sel = sel_weight_counter;
-assign w_data = store_weight_reg;
+// assign w_data = store_weight_reg;
 // assign w_rw = rw_w_reg;
 assign w_rq = w_rq_reg;
 assign w_wq = w_wq_reg;
 
 assign x_addr = r_or_w? load_x_counter : store_x_counter;
-assign x_data = store_x_reg;
+// assign x_data = store_x_reg;
 assign x_sel = sel_x_counter;
 // assign x_rw = rw_x_reg;
 assign x_rq = x_rq_reg;
@@ -138,7 +138,6 @@ assign x_wq = x_wq_reg;
 // connect with calc
 assign calc_1 = 1;
 assign calc_in = store_weight_reg ^ store_x_reg;
-assign calc_rst = 1;
 
 // instantiate compute block
  calc calc_i
@@ -157,6 +156,7 @@ assign rest_finish = rest_counter>10;
 always @(posedge clk) begin
 	if (en==0) begin
 		// reset
+	calc_rst = 1;
     	state <= `rest;
     	rest_counter <= 0;
 	end
@@ -175,6 +175,7 @@ always @(posedge clk) begin
 		end
 
 		`load_1: begin
+			calc_rst <= 0;
 			sel_weight_counter <= 0;
 			sel_x_counter <= 0;
 			rest_counter <= 0;
@@ -186,6 +187,7 @@ always @(posedge clk) begin
 			x_wq_reg <= 0;
 
 			r_or_w <= 1;
+			layer1_finish <= 0;
 
 			store_weight_reg <= w_data;
 			store_x_reg <= x_data;
@@ -199,13 +201,16 @@ always @(posedge clk) begin
 			if (load_weight_counter >= 802816 && load_x_counter >= 784) begin
 				state <= `compute_x2;
 				load_x_counter <= 0;
-				layer1_finish <= 0;
+				layer1_finish <= 1;
 				load_weight_counter <= 0;
 			end
-
-			if (load_x_counter >= 784 && load_weight_counter < 802816) begin
+			else if (load_x_counter >= 784 && load_weight_counter < 802816) begin
 				state <= `compute_x2;
 				load_x_counter <= 0;
+				layer1_finish <= 0;
+			end
+			else begin
+				state <= `load_1;
 			end
 
 			// if (load_weight_counter >= 802816) begin
@@ -219,12 +224,25 @@ always @(posedge clk) begin
 			w_wq_reg <= 0;
 			x_rq_reg <= 0;
 			x_wq_reg <= 1;
-
+			
+			calc_rst <= 1;
+		
 			r_or_w <= 0;
 			store_x_counter <= store_x_counter + 1;
 			// agg_out_reg is redundent. 
 			agg_out_reg <= agg_out_acted;
-			store_x_reg <= agg_out_reg;
+			wx_write_reg <= agg_out_reg;
+			if (layer1_finish==1) begin
+				state <= `load_2;
+			end
+			else begin
+				state <= `load_1;
+			end
+			
+		end
+		`load_2: begin
+			$display("finish!!!");
+			$finish;
 		end
 	endcase
 	end
