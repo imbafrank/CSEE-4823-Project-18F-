@@ -1,4 +1,5 @@
-`timescale 1ns/1ps
+`timescale 10us/10us
+
 `define HALF_CLOCK_PERIOD #5
 `define WEIGHT1_FILE "../rtl/weight1.results"
 `define WEIGHT2_FILE "../rtl/weight2.results"
@@ -231,7 +232,8 @@ initial begin
 	#10 w_sel_reg = 0;
 	@(posedge clk);
 	for (i=0; i<300; i=i+1) begin
-		ret_read = $fscanf(weight1_file, "%d", value_read);
+		// ret_read = $fscanf(weight1_file, "%d", value_read);
+		value_read = 1;
 		w_addr_reg <= i;
 		wx_write_reg <= value_read;
 		@(posedge clk);
@@ -242,7 +244,8 @@ initial begin
 	#10 w_sel_reg = 1;
 	@(posedge clk);
 	for (i=0; i<300; i=i+1) begin
-		ret_read = $fscanf(weight2_file, "%d", value_read);
+		// ret_read = $fscanf(weight2_file, "%d", value_read);
+		value_read = 1;
 		w_addr_reg <= i;
 		wx_write_reg <= value_read;
 		@(posedge clk);
@@ -253,7 +256,8 @@ initial begin
 	#10 w_sel_reg = 2;
 	@(posedge clk);
 	for (i=0; i<300; i=i+1) begin
-		ret_read = $fscanf(weight3_file, "%d", value_read);
+		// ret_read = $fscanf(weight3_file, "%d", value_read);
+		value_read = 1;
 		w_addr_reg <= i;
 		wx_write_reg <= value_read;
 		@(posedge clk);
@@ -264,7 +268,8 @@ initial begin
 	#10 w_sel_reg = 3;
 	@(posedge clk);
 	for (i=0; i<300; i=i+1) begin
-		ret_read = $fscanf(weight4_file, "%d", value_read);
+		// ret_read = $fscanf(weight4_file, "%d", value_read);
+		value_read = 1;
 		w_addr_reg <= i;
 		wx_write_reg <= value_read;
 		@(posedge clk);
@@ -281,7 +286,8 @@ initial begin
 	#10 x_sel_reg = 0;
 	@(posedge clk);
 	for (i=0; i<8; i=i+1) begin
-		ret_read = $fscanf(input_file, "%d", value_read);
+		// ret_read = $fscanf(input_file, "%d", value_read);
+		value_read = 1;
 		x_addr_reg <= i;
 		wx_write_reg <= value_read;
 		@(posedge clk);
