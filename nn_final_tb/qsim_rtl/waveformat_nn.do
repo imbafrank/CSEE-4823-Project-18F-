@@ -2,6 +2,7 @@ onerror {resume}
 quietly WaveActivateNextPane {} 0
 add wave -noupdate :nn_tb:*
 add wave -noupdate :nn_tb:mem_sys_i:*
+add wave -noupdate :nn_tb:mem_sys_i:mem_w1:*
 
 
 TreeUpdate [SetDefaultTree]
