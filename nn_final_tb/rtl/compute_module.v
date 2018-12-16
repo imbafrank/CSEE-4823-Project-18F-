@@ -2,7 +2,7 @@
 `include "./calc.v"
 
 // define state
-`define rest 0
+`define rst 0
 `define layer_1 1
 `define store_x2 2
 `define layer_2 3
@@ -87,44 +87,44 @@ wire agg_out_acted;
 // write data reg
 reg wx_write_reg=0;
 // weight counter
-reg [W_ADDR_LEN-1:0] load_weight_counter=0;
-reg [W_SEL_LEN-1:0] sel_weight_counter=0;
+reg [W_ADDR_LEN-1:0] load_weight_counter;
+reg [W_SEL_LEN-1:0] sel_weight_counter;
 // reg w_data_reg;
 reg w_rq_reg=0;
 reg w_wq_reg=0;
 
 // input counter
 reg r_or_w=0;
-reg [X_ADDR_LEN-1:0] store_x_counter=0;
-reg [X_ADDR_LEN-1:0] load_x_counter=0;
-reg [X_SEL_LEN-1:0] sel_x_counter=0;
-reg [4-1:0] store_output_counter=0;
+reg [X_ADDR_LEN-1:0] store_x_counter;
+reg [X_ADDR_LEN-1:0] load_x_counter;
+reg [X_SEL_LEN-1:0] sel_x_counter;
+reg [OUTPUT_LEN-1:0] store_output_counter;
 // reg x_data_reg;
 reg x_rq_reg=0;
 reg x_wq_reg=0;
 
 // reg store current value
-reg [W_DATA_LEN-1:0] store_weight_reg=0;
-reg [X_DATA_LEN-1:0] store_x_reg=0;
+reg [W_DATA_LEN-1:0] store_weight_reg;
+reg [X_DATA_LEN-1:0] store_x_reg;
 // reg store current rw status
 // reg [W_RW_LEN-1:0] rw_w_reg;
 // reg [X_RW_LEN-1:0] rw_x_reg;
 
 // reg store calc output
-reg agg_out_reg=0;
+reg agg_out_reg;
 
 // layer finish mark
-reg layer1_finish=0;
-reg layer2_finish=0;
-reg layer3_finish=0;
-reg layer4_finish=0;
+reg layer1_finish;
+reg layer2_finish;
+reg layer3_finish;
+reg layer4_finish;
 
 // state
-reg [3:0] state=`rest;
+reg [3:0] state;
 
-// rest state counter
-reg [3:0] rest_counter=0;
-wire rest_finish;
+// rst state counter
+// reg [3:0] rst_counter=0;
+// wire rst_finish;
 
 // activation result reg
 reg output_reg=0;
@@ -163,35 +163,57 @@ assign calc_in = store_weight_reg ^ store_x_reg;
 	.agg_out_acted(agg_out_acted));
 
 
-// when rest 10 cycles, go to next state. 
-assign rest_finish = rest_counter>10;
+// when rst 10 cycles, go to next state. 
+// assign rst_finish = rst_counter>10;
 
 always @(posedge clk) begin
 	if (en==0) begin
 		// reset
-	calc_rst <= 1;
-    	state <= `rest;
-    	rest_counter <= 0;
+		// calc_rst <= 1;
+    	state <= `rst;
+    	// rst_counter <= 0;
 	end
 
 	else begin
 		case (state)
-		`rest:	begin
-			if (rest_finish==1) begin
-				state <= `layer_1;
-				rest_counter <= 0;
-			end
-			else begin
-				rest_counter <= rest_counter + 1;
-				state <= `rest;
-			end
+		`rst:	begin
+			// if (rst_finish==1) begin
+			// 	state <= `layer_1;
+			// 	rst_counter <= 0;
+			// end
+			// else begin
+			// 	rst_counter <= rst_counter + 1;
+			// 	state <= `rst;
+			// end
+			state <= `layer_1;
+			load_weight_counter <= 0;
+			load_x_counter <= 0;
+			store_x_counter <= 0;
+
+			sel_weight_counter <= 0;
+			sel_x_counter <= 0;
+
+			store_output_counter <= 0;
+			store_weight_reg <= 0;
+			store_x_reg <= 0;
+
+			agg_out_reg <= 0;
+			layer1_finish <= 0;
+			layer2_finish <= 0;
+			layer3_finish <= 0;
+			layer4_finish <= 0;
+
+			calc_rst <= 1;
+			
+
+
 		end
 
 		`layer_1: begin
 			calc_rst <= 0;
 			sel_weight_counter <= 0;
 			sel_x_counter <= 0;
-			rest_counter <= 0;
+			// rst_counter <= 0;
 			// rw_w_reg <= 1;
 			// rw_x_reg <= 1;
 			w_rq_reg <= 1;
@@ -261,7 +283,7 @@ always @(posedge clk) begin
 			calc_rst <= 0;
 			sel_weight_counter <= 1;
 			sel_x_counter <= 1;
-			rest_counter <= 0;
+			// rst_counter <= 0;
 			// rw_w_reg <= 1;
 			// rw_x_reg <= 1;
 			w_rq_reg <= 1;
@@ -327,7 +349,7 @@ always @(posedge clk) begin
 			calc_rst <= 0;
 			sel_weight_counter <= 2;
 			sel_x_counter <= 2;
-			rest_counter <= 0;
+			// rst_counter <= 0;
 			// rw_w_reg <= 1;
 			// rw_x_reg <= 1;
 			w_rq_reg <= 1;
@@ -393,7 +415,7 @@ always @(posedge clk) begin
 			calc_rst <= 0;
 			sel_weight_counter <= 3;
 			sel_x_counter <= 3;
-			rest_counter <= 0;
+			// rst_counter <= 0;
 			// rw_w_reg <= 1;
 			// rw_x_reg <= 1;
 			w_rq_reg <= 1;
