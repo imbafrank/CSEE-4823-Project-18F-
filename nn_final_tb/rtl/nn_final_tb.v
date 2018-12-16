@@ -233,31 +233,36 @@ initial begin
 	x_wq_reg = 0;
 	// start reading weight1
 	#10 w_sel_reg = 0;
-	// w_addr_reg <=0;
+	w_addr_reg <=0;
+	// wx_write_reg <= 1;
+	ret_read = $fscanf(weight1_file, "%d", value_read);
+	wx_write_reg <= value_read;
 
 	@(posedge clk);
-	for (i=0; i<10; i=i+1) begin
+	for (i=1; i<10; i=i+1) begin
 		ret_read = $fscanf(weight1_file, "%d", value_read);
 		// value_read = 1;
-		w_addr_reg <= i-1;
+		w_addr_reg <= i;
 		wx_write_reg <= value_read;
 		@(posedge clk);
 	end
 	$display("W1 finish loading.");
 
 	// read data from weight1
-
+	@(posedge clk);
+	w_wq_reg <= 0;
 	// #10 w_wq_reg = 0;
 
 	@(posedge clk);
 	// value_read <= 1;
-	// w_addr_reg <= 0;
+	w_addr_reg <= 0;
+	// wx_read_reg <= w_data;
 
 	@(posedge clk);
-	for (i=0; i<10; i=i+1) begin
+	for (i=1; i<11; i=i+1) begin
 		// ret_read = $fscanf(weight1_file, "%d", value_read);
 		// value_read = 1;
-		w_addr_reg <= i-1;
+		w_addr_reg <= i;
 		// wx_write_reg <= value_read;
 		wx_read_reg <= w_data;
 		@(posedge clk);
