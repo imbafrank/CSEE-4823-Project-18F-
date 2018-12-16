@@ -8,6 +8,7 @@
 // -----------------------------------------------------------------------
 // 11/21/2018 	Shixin Qin      1.0                     Basic function design
 // 12/13/2018	Shixin Qin		2.0						Tested, func
+// 12/15/2018	Shixin Qin		2.1						Synthesizable
 // *********************************************************************************
 
 module agg (clk, rst, agg_in, agg_out2alu, agg_out_acted);
