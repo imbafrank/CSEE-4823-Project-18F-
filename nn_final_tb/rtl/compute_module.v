@@ -98,6 +98,7 @@ reg r_or_w=0;
 reg [X_ADDR_LEN-1:0] store_x_counter=0;
 reg [X_ADDR_LEN-1:0] load_x_counter=0;
 reg [X_SEL_LEN-1:0] sel_x_counter=0;
+reg [4-1:0] store_output_counter=0;
 // reg x_data_reg;
 reg x_rq_reg=0;
 reg x_wq_reg=0;
@@ -434,7 +435,7 @@ always @(posedge clk) begin
 			// w_wq_reg <= 0;
 			// x_rq_reg <= 0;
 			// x_wq_reg <= 1;
-			
+			store_output_counter <= store_output_counter + 1;
 			calc_rst <= 1;
 		
 			// r_or_w <= 0;
@@ -443,9 +444,25 @@ always @(posedge clk) begin
 			agg_out_reg <= agg_out_acted;
 			wx_write_reg <= agg_out_reg;
 			$display("%d", wx_write_reg);
+			
+			// if(wx_write_reg==1) begin
+			// 	$display("The number is %d.", store_output_counter);
+			// 	$finish;
+			// end
+			// else begin
+			// 	$display("It is not %d.", store_output_counter)
+			// end
+			if (wx_write_reg==1)begin
+			 	$display("The number is %d.", store_output_counter);
+			 	$finish;
+			 end
+			else begin
+			   	$display("It is not %d.", store_output_counter);
+			end
+
 			if (layer4_finish==1) begin
 				// state <= `layer_4;
-				$finish;
+				//$finish;
 			end
 			else begin
 				state <= `layer_4;

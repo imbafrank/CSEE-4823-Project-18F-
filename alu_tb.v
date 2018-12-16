@@ -51,7 +51,7 @@ alu #(
 initial
 begin
 
-    $dumpfile("/home/netlab/nna/df.vcd");
+    $dumpfile("df.vcd");
     $dumpvars(0, tb_alu);
     $display("\t\ttime,\tclk,\treset,\tx,\tw,\ta,\tb,\tout"); 
     $monitor("%d,\t%b,\t%b,\t%b,\t%b,\t%b,\t%b",$time, clk,rst,alu_x,alu_w, alu_in_a_lsb, alu_in_b,alu_out); 

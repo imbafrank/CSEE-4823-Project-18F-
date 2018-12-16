@@ -46,7 +46,7 @@ agg #(
 
 initial
 begin
-    $dumpfile("/home/netlab/nna/df.vcd");
+    $dumpfile("./df.vcd");
     $dumpvars(0, tb_agg);
     $display("\t\ttime,\tclk,\treset,\tin,\toutacted,\tout2alu"); 
     $monitor("%d,\t%b,\t%b,\t%b,\t%b,\t%b"
