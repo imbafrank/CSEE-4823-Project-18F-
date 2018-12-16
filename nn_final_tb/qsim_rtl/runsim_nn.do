@@ -8,7 +8,7 @@ vmap work work
 
 # Include Netlist
 #vlog -incr ../rtl/compute_module.v
-vlog -incr ../rtl/mem_1.v
+vlog -incr ../rtl/mem_sys_new.v
 
 # Include Testbench
 vlog -incr ../rtl/nn_final_tb.v
