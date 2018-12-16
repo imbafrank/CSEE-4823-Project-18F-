@@ -253,11 +253,14 @@ initial begin
 	w_wq_reg <= 0;
 	// #10 w_wq_reg = 0;
 
+	// set addr in this cycle.
+	// get data in next cycle.
+	// when i=1, wx_read_reg is the value that addr=0.
+	// TODO: fix this problem in compute module. 
 	@(posedge clk);
 	// value_read <= 1;
 	w_addr_reg <= 0;
 	// wx_read_reg <= w_data;
-
 	@(posedge clk);
 	for (i=1; i<11; i=i+1) begin
 		// ret_read = $fscanf(weight1_file, "%d", value_read);

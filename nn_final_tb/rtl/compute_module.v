@@ -1,5 +1,6 @@
 `timescale 1ns/1ps
-// `include "calc.v"
+`include "./calc.v"
+
 // define state
 `define rest 0
 `define layer_1 1
@@ -167,7 +168,7 @@ assign rest_finish = rest_counter>10;
 always @(posedge clk) begin
 	if (en==0) begin
 		// reset
-	calc_rst = 1;
+	calc_rst <= 1;
     	state <= `rest;
     	rest_counter <= 0;
 	end
