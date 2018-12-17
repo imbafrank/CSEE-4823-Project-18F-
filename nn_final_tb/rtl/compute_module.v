@@ -45,12 +45,12 @@ module compute_module
 	w_addr,
 	w_data,
 	w_sel,
-	w_rq,
+	// w_rq,
 	w_wq,
 	x_addr,
 	x_data,
 	x_sel,
-	x_rq,
+	// x_rq,
 	x_wq
 	);
 
@@ -68,13 +68,13 @@ output wire [W_ADDR_LEN-1:0] w_addr;
 input wire [W_DATA_LEN-1:0] w_data;
 output wire [W_SEL_LEN-1:0] w_sel;
 // output [W_RW_LEN-1:0] w_rw;
-output wire w_rq;
+// output wire w_rq;
 output wire w_wq;
 output wire [X_ADDR_LEN-1:0] x_addr;
 input wire [X_DATA_LEN-1:0] x_data;
 output wire [X_SEL_LEN-1:0] x_sel;
 // output [X_RW_LEN-1:0] x_rw;
-output wire x_rq;
+// output wire x_rq;
 output wire x_wq;
 
 // signal to calc
@@ -90,7 +90,7 @@ reg wx_write_reg=0;
 reg [W_ADDR_LEN-1:0] load_weight_counter;
 reg [W_SEL_LEN-1:0] sel_weight_counter;
 // reg w_data_reg;
-reg w_rq_reg=0;
+// reg w_rq_reg=0;
 reg w_wq_reg=0;
 
 // input counter
@@ -100,7 +100,7 @@ reg [X_ADDR_LEN-1:0] load_x_counter;
 reg [X_SEL_LEN-1:0] sel_x_counter;
 reg [OUTPUT_LEN-1:0] store_output_counter;
 // reg x_data_reg;
-reg x_rq_reg=0;
+// reg x_rq_reg=0;
 reg x_wq_reg=0;
 
 // reg store current value
@@ -138,14 +138,14 @@ assign w_addr = load_weight_counter;
 assign w_sel = sel_weight_counter;
 // assign w_data = store_weight_reg;
 // assign w_rw = rw_w_reg;
-assign w_rq = w_rq_reg;
+// assign w_rq = w_rq_reg;
 assign w_wq = w_wq_reg;
 
 assign x_addr = r_or_w? load_x_counter : store_x_counter;
 // assign x_data = store_x_reg;
 assign x_sel = sel_x_counter;
 // assign x_rw = rw_x_reg;
-assign x_rq = x_rq_reg;
+// assign x_rq = x_rq_reg;
 assign x_wq = x_wq_reg;
 
 // connect with calc
@@ -204,7 +204,7 @@ always @(posedge clk) begin
 			layer4_finish <= 0;
 
 			calc_rst <= 1;
-			
+
 
 
 		end
@@ -216,9 +216,9 @@ always @(posedge clk) begin
 			// rst_counter <= 0;
 			// rw_w_reg <= 1;
 			// rw_x_reg <= 1;
-			w_rq_reg <= 1;
+			// w_rq_reg <= 1;
 			w_wq_reg <= 0;
-			x_rq_reg <= 1;
+			// x_rq_reg <= 1;
 			x_wq_reg <= 0;
 
 			r_or_w <= 1;
@@ -233,13 +233,13 @@ always @(posedge clk) begin
 
 
 
-			if (load_x_counter >= (X1_LEN-1) && load_weight_counter >= (W1_LEN-1)) begin
+			if (load_x_counter >= (X1_LEN) && load_weight_counter >= (W1_LEN)) begin
 				state <= `store_x2;
 				load_x_counter <= 0;
 				layer1_finish <= 1;
 				load_weight_counter <= 0;
 			end
-			else if (load_x_counter >= (X1_LEN-1) && load_weight_counter < (W1_LEN-1)) begin
+			else if (load_x_counter >= (X1_LEN) && load_weight_counter < (W1_LEN)) begin
 				state <= `store_x2;
 				load_x_counter <= 0;
 				layer1_finish <= 0;
@@ -255,9 +255,9 @@ always @(posedge clk) begin
 
 		`store_x2: begin
 			sel_x_counter <= 1;
-			w_rq_reg <= 0;
+			// w_rq_reg <= 0;
 			w_wq_reg <= 0;
-			x_rq_reg <= 0;
+			// x_rq_reg <= 0;
 			x_wq_reg <= 1;
 			
 			calc_rst <= 1;
@@ -286,9 +286,9 @@ always @(posedge clk) begin
 			// rst_counter <= 0;
 			// rw_w_reg <= 1;
 			// rw_x_reg <= 1;
-			w_rq_reg <= 1;
+			// w_rq_reg <= 1;
 			w_wq_reg <= 0;
-			x_rq_reg <= 1;
+			// x_rq_reg <= 1;
 			x_wq_reg <= 0;
 
 			r_or_w <= 1;
@@ -303,13 +303,13 @@ always @(posedge clk) begin
 
 
 
-			if (load_x_counter >= (X2_LEN-1) && load_weight_counter >= (W2_LEN-1)) begin
+			if (load_x_counter >= (X2_LEN) && load_weight_counter >= (W2_LEN)) begin
 				state <= `store_x3;
 				load_x_counter <= 0;
 				layer2_finish <= 1;
 				load_weight_counter <= 0;
 			end
-			else if (load_x_counter >= (X2_LEN-1) && load_weight_counter < (W2_LEN-1)) begin
+			else if (load_x_counter >= (X2_LEN) && load_weight_counter < (W2_LEN)) begin
 				state <= `store_x3;
 				load_x_counter <= 0;
 				layer2_finish <= 0;
@@ -321,9 +321,9 @@ always @(posedge clk) begin
 
 		`store_x3: begin
 			sel_x_counter <= 2;
-			w_rq_reg <= 0;
+			// w_rq_reg <= 0;
 			w_wq_reg <= 0;
-			x_rq_reg <= 0;
+			// x_rq_reg <= 0;
 			x_wq_reg <= 1;
 			
 			calc_rst <= 1;
@@ -352,9 +352,9 @@ always @(posedge clk) begin
 			// rst_counter <= 0;
 			// rw_w_reg <= 1;
 			// rw_x_reg <= 1;
-			w_rq_reg <= 1;
+			// w_rq_reg <= 1;
 			w_wq_reg <= 0;
-			x_rq_reg <= 1;
+			// x_rq_reg <= 1;
 			x_wq_reg <= 0;
 
 			r_or_w <= 1;
@@ -369,13 +369,13 @@ always @(posedge clk) begin
 
 
 
-			if (load_x_counter >= (X3_LEN-1) && load_weight_counter >= (W3_LEN-1)) begin
+			if (load_x_counter >= (X3_LEN) && load_weight_counter >= (W3_LEN)) begin
 				state <= `store_x4;
 				load_x_counter <= 0;
 				layer3_finish <= 1;
 				load_weight_counter <= 0;
 			end
-			else if (load_x_counter >= (X3_LEN-1) && load_weight_counter < (W3_LEN-1)) begin
+			else if (load_x_counter >= (X3_LEN) && load_weight_counter < (W3_LEN)) begin
 				state <= `store_x4;
 				load_x_counter <= 0;
 				layer3_finish <= 0;
@@ -387,9 +387,9 @@ always @(posedge clk) begin
 
 		`store_x4: begin
 			sel_x_counter <= 3;
-			w_rq_reg <= 0;
+			// w_rq_reg <= 0;
 			w_wq_reg <= 0;
-			x_rq_reg <= 0;
+			// x_rq_reg <= 0;
 			x_wq_reg <= 1;
 			
 			calc_rst <= 1;
@@ -418,9 +418,9 @@ always @(posedge clk) begin
 			// rst_counter <= 0;
 			// rw_w_reg <= 1;
 			// rw_x_reg <= 1;
-			w_rq_reg <= 1;
+			// w_rq_reg <= 1;
 			w_wq_reg <= 0;
-			x_rq_reg <= 1;
+			// x_rq_reg <= 1;
 			x_wq_reg <= 0;
 
 			r_or_w <= 1;
@@ -435,13 +435,13 @@ always @(posedge clk) begin
 
 
 
-			if (load_x_counter >= (X4_LEN-1) && load_weight_counter >= (W4_LEN-1)) begin
+			if (load_x_counter >= (X4_LEN) && load_weight_counter >= (W4_LEN)) begin
 				state <= `store_output;
 				load_x_counter <= 0;
 				layer4_finish <= 1;
 				load_weight_counter <= 0;
 			end
-			else if (load_x_counter >= (X4_LEN-1) && load_weight_counter < (W4_LEN-1)) begin
+			else if (load_x_counter >= (X4_LEN) && load_weight_counter < (W4_LEN)) begin
 				state <= `store_output;
 				load_x_counter <= 0;
 				layer4_finish <= 0;

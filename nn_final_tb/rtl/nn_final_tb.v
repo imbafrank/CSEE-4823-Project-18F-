@@ -126,9 +126,9 @@ mem_sys mem_sys_i
 // 	)
 assign wx_write = load_compute_ctrl? wx_write_reg : wx_write_wire;
 
-assign w_addr = load_compute_ctrl? w_addr_reg : x_addr_wire;
-// assign w_data = load_compute_ctrl? w_data_reg : w_data_wire;
-assign w_sel = load_compute_ctrl? w_sel_reg : x_addr_wire;
+assign w_addr = load_compute_ctrl? w_addr_reg : w_addr_wire;
+assign w_data = load_compute_ctrl? w_data_reg : w_data_wire;
+assign w_sel = load_compute_ctrl? w_sel_reg : w_sel_wire;
 // assign w_rw = load_compute_ctrl? w_rw_reg : w_rw_wire;
 // assign w_rq = load_compute_ctrl? w_rq_reg : w_rq_wire;
 assign w_wq = load_compute_ctrl? w_wq_reg : w_wq_wire;
@@ -259,6 +259,8 @@ initial begin
 	// TODO: fix this problem in compute module. 
 	@(posedge clk);
 	// value_read <= 1;
+	w_addr_reg <= 0;
+	@(posedge clk);
 	w_addr_reg <= 0;
 	// wx_read_reg <= w_data;
 	@(posedge clk);
