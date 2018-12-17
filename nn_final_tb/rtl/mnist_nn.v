@@ -61,11 +61,13 @@ wire [X_SEL_LEN-1:0] x_sel;
 
 assign wx_write = load_compute_ctrl? wx_write_oc : wx_write_wire;
 assign w_addr = load_compute_ctrl? w_addr_oc : w_addr_wire;
-assign w_data = load_compute_ctrl? w_data_oc : w_data_wire;
+// assign w_data = load_compute_ctrl? w_data_oc : w_data_wire;
+assign w_data_wire = w_data;
 assign w_sel = load_compute_ctrl? w_sel_oc : w_sel_wire;
 assign w_wq = load_compute_ctrl? w_wq_oc : w_wq_wire;
 assign x_addr = load_compute_ctrl? x_addr_oc : x_addr_wire;
-assign x_data = load_compute_ctrl? x_data_oc : x_data_wire;
+// assign x_data = load_compute_ctrl? x_data_oc : x_data_wire;
+assign x_data_wire = x_data;
 assign x_sel = load_compute_ctrl? x_sel_oc : x_sel_wire;
 assign x_wq = load_compute_ctrl? x_wq_oc : x_wq_wire;
 
