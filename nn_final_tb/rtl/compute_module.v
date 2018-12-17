@@ -23,14 +23,24 @@ module compute_module
 	parameter X_DATA_LEN = 1,
 	parameter X_SEL_LEN = 2,
 	parameter X_RW_LEN = 2,
-	parameter W1_LEN = 802816,
-	parameter X1_LEN = 784,
-	parameter W2_LEN = 1048576,
-	parameter X2_LEN = 1024,
-	parameter W3_LEN = 1048576,
-	parameter X3_LEN = 1024,
-	parameter W4_LEN = 10240,
-	parameter X4_LEN = 1024,
+	// parameter W1_LEN = 802816,
+	// parameter X1_LEN = 784,
+	// parameter W2_LEN = 1048576,
+	// parameter X2_LEN = 1024,
+	// parameter W3_LEN = 1048576,
+	// parameter X3_LEN = 1024,
+	// parameter W4_LEN = 10240,
+	// parameter X4_LEN = 1024,
+	// small nn test
+	parameter W1_LEN = 6,
+	parameter X1_LEN = 2,
+	parameter W2_LEN = 9,
+	parameter X2_LEN = 3,
+	parameter W3_LEN = 9,
+	parameter X3_LEN = 3,
+	parameter W4_LEN = 6,
+	parameter X4_LEN = 4,
+
 	parameter OUTPUT_LEN = 10,
 	parameter alu_width  = 12
 	)
@@ -172,6 +182,25 @@ always @(posedge clk) begin
 		// calc_rst <= 1;
     	state <= `rst;
     	// rst_counter <= 0;
+		load_weight_counter <= 0;
+		load_x_counter <= 0;
+		store_x_counter <= 0;
+
+		sel_weight_counter <= 0;
+		sel_x_counter <= 0;
+
+		store_output_counter <= 0;
+		store_weight_reg <= 0;
+		store_x_reg <= 0;
+
+		agg_out_reg <= 0;
+		layer1_finish <= 0;
+		layer2_finish <= 0;
+		layer3_finish <= 0;
+		layer4_finish <= 0;
+
+		calc_rst <= 1;
+		compute_finish <= 0;
 	end
 
 	// else if (!rst) begin

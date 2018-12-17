@@ -50,6 +50,15 @@ wire [X_DATA_LEN-1:0] x_data_wire;
 wire [W_SEL_LEN-1:0] w_sel_wire;
 wire [X_SEL_LEN-1:0] x_sel_wire;
 
+wire w_wq, x_wq;
+wire [W_ADDR_LEN-1:0] w_addr;
+wire [X_ADDR_LEN-1:0] x_addr;
+wire wx_write;
+wire [W_DATA_LEN-1:0] w_data;
+wire [X_DATA_LEN-1:0] x_data;
+wire [W_SEL_LEN-1:0] w_sel;
+wire [X_SEL_LEN-1:0] x_sel;
+
 assign wx_write = load_compute_ctrl? wx_write_oc : wx_write_wire;
 assign w_addr = load_compute_ctrl? w_addr_oc : w_addr_wire;
 assign w_data = load_compute_ctrl? w_data_oc : w_data_wire;

@@ -55,7 +55,7 @@ reg en_compute;
 // wire x_wq_wire;
 
 reg wx_write_reg;
-reg wx_read_reg;
+// reg wx_read_reg;
 
 reg [W_ADDR_LEN-1:0] w_addr_reg;
 reg [W_DATA_LEN-1:0] w_data_reg;
@@ -186,8 +186,7 @@ initial begin
 
 	// load mode: load data from external into memory
 	load_compute_ctrl = 1;
-
-	// en_compute = 0;
+	en_compute = 0;
 	// start_compute = 0;
 
 	weight1_file = $fopen(`WEIGHT1_FILE,"r");
@@ -244,17 +243,18 @@ initial begin
 	#10 rst_mem = 1;
 
 	// start read weight
-	#10;
-	// w_rq_reg = 0;
-	w_wq_reg = 1;
-	// x_rq_reg = 0;
-	x_wq_reg = 0;
 	// start reading weight1
 	// #10 w_sel_reg = 0;
 	// w_addr_reg <=0;
 	// // wx_write_reg <= 1;
 	// ret_read = $fscanf(weight1_file, "%d", value_read);
 	// wx_write_reg <= value_read;
+	@(posedge clk);
+	// w_rq_reg = 0;
+	w_wq_reg <= 1;
+	// x_rq_reg = 0;
+	x_wq_reg <= 0;
+	w_sel_reg <= 0;
 
 	@(posedge clk);
 	for (i=0; i<6; i=i+1) begin
@@ -353,11 +353,15 @@ initial begin
 		@(posedge clk);
 	end
 	$display("Input finish loading");
+	load_compute_ctrl <= 0;
 
 	// $display("Start computing");
 	// #10 start_compute = 1;
-	
-	$finish;
+	@(posedge clk);
+	en_compute <= 1;
+	if (compute_finish==1) begin
+		$finish;
+	end
 
 
 end
