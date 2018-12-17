@@ -36,7 +36,7 @@ module compute_module
 	)
 (
 	clk,
-	rst,
+	// rst,
 	// control
 	en,
 	compute_finish,
@@ -55,7 +55,7 @@ module compute_module
 	);
 
 
-input wire rst;
+// input wire rst;
 input wire clk;
 input wire en;
 // control signal from tb
@@ -174,6 +174,10 @@ always @(posedge clk) begin
     	// rst_counter <= 0;
 	end
 
+	// else if (!rst) begin
+		
+	// end
+
 	else begin
 		case (state)
 		`rst:	begin
@@ -204,7 +208,7 @@ always @(posedge clk) begin
 			layer4_finish <= 0;
 
 			calc_rst <= 1;
-
+			compute_finish <= 0;
 
 
 		end
@@ -459,7 +463,7 @@ always @(posedge clk) begin
 			// x_wq_reg <= 1;
 			store_output_counter <= store_output_counter + 1;
 			calc_rst <= 1;
-		
+			
 			// r_or_w <= 0;
 			// store_x_counter <= store_x_counter + 1;
 			// // agg_out_reg is redundent. 
@@ -475,6 +479,7 @@ always @(posedge clk) begin
 			// 	$display("It is not %d.", store_output_counter)
 			// end
 			if (wx_write_reg==1)begin
+				compute_finish <= 1;
 			 	$display("The number is %d.", store_output_counter);
 			 	$finish;
 			 end
@@ -484,7 +489,7 @@ always @(posedge clk) begin
 
 			if (layer4_finish==1) begin
 				// state <= `layer_4;
-				//$finish;
+				// $finish;
 			end
 			else begin
 				state <= `layer_4;
