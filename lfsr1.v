@@ -1,81 +1,29 @@
-module mem_small
-(
-        input data_a,
-        input [10:0] addr_a,
-        input we_a, clk,
-       output reg q_a
-);
-        
-        reg [2048-1:0] ram;
-        
-        
-        always @ (posedge clk)
-        begin
-                if (we_a) 
-                begin
-                        ram[addr_a] <= data_a;
-                        q_a <= data_a;
-                end
-                else 
-                begin
-                        q_a <= ram[addr_a];
-                end
-        end
-        
-        
-endmodule
+//
+//
+//
+//
+`timescale 1ns/1ps
 
-
-module lfsr1(
- input clk,
- input data_a,
- input we_a,
- output q_a,
- input addr_a
-);
-
-	mem_small m1(
-	.data_a(data_a),
-	.clk(clk),
-	.we_a(we_a),
-	.q_a(q_a),
-	.addr_a(addr_a)
+module lfsr1 (clk, i,j,write_enable,din,dout);
+input clk,
+	input wire [9:0] i,
+	input wire [8:0] j,
+	input write_enalbe,
+	input wire [7:0] din,
+	output reg [7:0] dout
 	);
 
-        mem_small m2(
-        .data_a(data_a),
-        .clk(clk),
-        .we_a(we_a),
-        .q_a(q_a),
-        .addr_a(addr_a)
-        );
+	reg 7:0] M[0:307199];
+	wire [18:0] addr;
+	
+	assign addr = i*640 + j;
 
-        mem_small m3(
-        .data_a(data_a),
-        .clk(clk),
-        .we_a(we_a),
-        .q_a(q_a),
-        .addr_a(addr_a)
-        );
-        mem_small m4(
-        .data_a(data_a),
-        .clk(clk),
-        .we_a(we_a),
-        .q_a(q_a),
-        .addr_a(addr_a)
-        );
-        mem_small m5(
-        .data_a(data_a),
-        .clk(clk),
-        .we_a(we_a),
-        .q_a(q_a),
-        .addr_a(addr_a)
-        );
-        mem_small m6(
-        .data_a(data_a),
-        .clk(clk),
-        .we_a(we_a),
-        .q_a(q_a),
-        .addr_a(addr_a)
-        );
+
+	always @(posedge clk) begin
+	if (write_enable = 1'b1)
+		M[addr] <= din;
+	dout <= M[addr];
+	end
 endmodule
+
+
