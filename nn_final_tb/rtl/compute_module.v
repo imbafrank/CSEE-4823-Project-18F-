@@ -266,13 +266,13 @@ always @(posedge clk) begin
 
 
 
-			if (load_x_counter >= (X1_LEN) && load_weight_counter >= (W1_LEN)) begin
+			if (load_x_counter >= (X1_LEN-1) && load_weight_counter >= (W1_LEN-1)) begin
 				state <= `store_x2;
 				load_x_counter <= 0;
 				layer1_finish <= 1;
 				load_weight_counter <= 0;
 			end
-			else if (load_x_counter >= (X1_LEN) && load_weight_counter < (W1_LEN)) begin
+			else if (load_x_counter >= (X1_LEN-1) && load_weight_counter < (W1_LEN-1)) begin
 				state <= `store_x2;
 				load_x_counter <= 0;
 				layer1_finish <= 0;
@@ -336,13 +336,13 @@ always @(posedge clk) begin
 
 
 
-			if (load_x_counter >= (X2_LEN) && load_weight_counter >= (W2_LEN)) begin
+			if (load_x_counter >= (X2_LEN-1) && load_weight_counter >= (W2_LEN-1)) begin
 				state <= `store_x3;
 				load_x_counter <= 0;
 				layer2_finish <= 1;
 				load_weight_counter <= 0;
 			end
-			else if (load_x_counter >= (X2_LEN) && load_weight_counter < (W2_LEN)) begin
+			else if (load_x_counter >= (X2_LEN-1) && load_weight_counter < (W2_LEN-1)) begin
 				state <= `store_x3;
 				load_x_counter <= 0;
 				layer2_finish <= 0;
@@ -402,13 +402,13 @@ always @(posedge clk) begin
 
 
 
-			if (load_x_counter >= (X3_LEN) && load_weight_counter >= (W3_LEN)) begin
+			if (load_x_counter >= (X3_LEN-1) && load_weight_counter >= (W3_LEN-1)) begin
 				state <= `store_x4;
 				load_x_counter <= 0;
 				layer3_finish <= 1;
 				load_weight_counter <= 0;
 			end
-			else if (load_x_counter >= (X3_LEN) && load_weight_counter < (W3_LEN)) begin
+			else if (load_x_counter >= (X3_LEN-1) && load_weight_counter < (W3_LEN-1)) begin
 				state <= `store_x4;
 				load_x_counter <= 0;
 				layer3_finish <= 0;
@@ -468,13 +468,13 @@ always @(posedge clk) begin
 
 
 
-			if (load_x_counter >= (X4_LEN) && load_weight_counter >= (W4_LEN)) begin
+			if (load_x_counter >= (X4_LEN-1) && load_weight_counter >= (W4_LEN-1)) begin
 				state <= `store_output;
 				load_x_counter <= 0;
 				layer4_finish <= 1;
 				load_weight_counter <= 0;
 			end
-			else if (load_x_counter >= (X4_LEN) && load_weight_counter < (W4_LEN)) begin
+			else if (load_x_counter >= (X4_LEN-1) && load_weight_counter < (W4_LEN-1)) begin
 				state <= `store_output;
 				load_x_counter <= 0;
 				layer4_finish <= 0;
