@@ -11,7 +11,7 @@ module demux1to4(
     input [1:0] sel;
 
     output Data_out_0;
-     output Data_out_1;
+    output Data_out_1;
     output Data_out_2;
     output Data_out_3;
 

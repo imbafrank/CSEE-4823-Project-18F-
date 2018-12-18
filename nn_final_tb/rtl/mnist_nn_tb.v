@@ -254,12 +254,15 @@ initial begin
 	w_wq_reg <= 1;
 	// x_rq_reg = 0;
 	x_wq_reg <= 0;
+
+	@(posedge clk);
 	w_sel_reg <= 0;
 
 	@(posedge clk);
 	for (i=0; i<6; i=i+1) begin
 		ret_read = $fscanf(weight1_file, "%d", value_read);
 		// value_read = 1;
+		@(posedge clk);
 		w_addr_reg <= i;
 		wx_write_reg <= value_read;
 		@(posedge clk);
@@ -301,6 +304,7 @@ initial begin
 	for (i=0; i<9; i=i+1) begin
 		ret_read = $fscanf(weight2_file, "%d", value_read);
 		// value_read = 1;
+		@(posedge clk);
 		w_addr_reg <= i;
 		wx_write_reg <= value_read;
 		@(posedge clk);
@@ -315,6 +319,7 @@ initial begin
 	for (i=0; i<9; i=i+1) begin
 		ret_read = $fscanf(weight3_file, "%d", value_read);
 		// value_read = 1;
+		@(posedge clk);
 		w_addr_reg <= i;
 		wx_write_reg <= value_read;
 		@(posedge clk);
@@ -329,6 +334,7 @@ initial begin
 	for (i=0; i<9; i=i+1) begin
 		ret_read = $fscanf(weight4_file, "%d", value_read);
 		// value_read = 1;
+		@(posedge clk);
 		w_addr_reg <= i;
 		wx_write_reg <= value_read;
 		@(posedge clk);
@@ -339,6 +345,7 @@ initial begin
 	@(posedge clk);
 	// w_rq_reg = 0;
 	w_wq_reg = 0;
+	@(posedge clk);
 	// x_rq_reg = 0;
 	x_addr_reg <= 0;
 	x_sel_reg = 0;
@@ -350,22 +357,62 @@ initial begin
 	for (i=0; i<2; i=i+1) begin
 		ret_read = $fscanf(input_file, "%d", value_read);
 		// value_read = 1;
+		@(posedge clk);
 		x_addr_reg <= i;
 		wx_write_reg <= value_read;
 		@(posedge clk);
 	end
 	$display("Input finish loading");
 	x_wq_reg <= 0;
-	
+
+
 	@(posedge clk);
 	load_compute_ctrl <= 0;
-	// $display("Start computing");
-	// #10 start_compute = 1;
+
 	@(posedge clk);
 	en_compute <= 1;
 	if (compute_finish==1) begin
 		$finish;
 	end
+
+	// for testing load weight
+	// @(posedge clk);
+	// w_sel_reg <= 0;
+
+	// for (i=0; i<6; i=i+1) begin
+	// 	// ret_read = $fscanf(weight1_file, "%d", value_read);
+	// 	// value_read = 1;
+	// 	// @(posedge clk);
+	// 	w_addr_reg <= i;
+	// 	// wx_write_reg <= value_read;
+	// 	@(posedge clk);
+	// end
+
+	// @(posedge clk);
+	// w_sel_reg <= 1;
+
+	// for (i=0; i<9; i=i+1) begin
+	// 	// ret_read = $fscanf(weight1_file, "%d", value_read);
+	// 	// value_read = 1;
+	// 	// @(posedge clk);
+	// 	w_addr_reg <= i;
+	// 	// wx_write_reg <= value_read;
+	// 	@(posedge clk);
+	// end
+
+	// @(posedge clk);
+	// w_sel_reg <= 2;
+
+	// for (i=0; i<9; i=i+1) begin
+	// 	// ret_read = $fscanf(weight1_file, "%d", value_read);
+	// 	// value_read = 1;
+	// 	// @(posedge clk);
+	// 	w_addr_reg <= i;
+	// 	// wx_write_reg <= value_read;
+	// 	@(posedge clk);
+	// end
+
+	// $finish;
 
 
 end
