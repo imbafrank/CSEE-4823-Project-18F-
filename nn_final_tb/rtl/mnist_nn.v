@@ -1,5 +1,5 @@
 `timescale 1ns / 1ps
-`include "./compute_module.v"
+`include "./compute_module_test.v"
 `include "./mem_sys_new.v"
 
 module mnist_nn
@@ -73,7 +73,7 @@ assign x_wq = load_compute_ctrl? x_wq_oc : x_wq_wire;
 
 mem_sys mem_sys_i
 (
-	.clk(clk),
+	// .clk(clk),
 	.we_w(w_wq),
 	.we_x(x_wq),
 	.address_w(w_addr),

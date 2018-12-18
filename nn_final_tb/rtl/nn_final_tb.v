@@ -78,7 +78,7 @@ reg write_x1_finish;
 
 mem_sys mem_sys_i
 (	
-	.clk(clk),
+	// .clk(clk),
 	// .rst(rst_mem),
 	// .read_rq_x(x_rq),
 	// .read_rq_w(w_rq),
@@ -127,14 +127,14 @@ mem_sys mem_sys_i
 assign wx_write = load_compute_ctrl? wx_write_reg : wx_write_wire;
 
 assign w_addr = load_compute_ctrl? w_addr_reg : w_addr_wire;
-assign w_data = load_compute_ctrl? w_data_reg : w_data_wire;
+// assign w_data = load_compute_ctrl? w_data_reg : w_data_wire;
 assign w_sel = load_compute_ctrl? w_sel_reg : w_sel_wire;
 // assign w_rw = load_compute_ctrl? w_rw_reg : w_rw_wire;
 // assign w_rq = load_compute_ctrl? w_rq_reg : w_rq_wire;
 assign w_wq = load_compute_ctrl? w_wq_reg : w_wq_wire;
 
 assign x_addr = load_compute_ctrl? x_addr_reg : x_addr_wire;
-assign x_data = load_compute_ctrl? x_data_reg : x_data_wire;
+// assign x_data = load_compute_ctrl? x_data_reg : x_data_wire;
 assign x_sel = load_compute_ctrl? x_sel_reg : x_sel_wire;
 // assign x_rw = load_compute_ctrl? x_rw_reg : x_rw_wire;
 // assign x_rq = load_compute_ctrl? x_rq_reg : x_rq_wire;
@@ -223,23 +223,25 @@ initial begin
 	end
 
 	// reset mem
-	#10 rst_mem = 1;
+	// #10 rst_mem = 1;
 
 	// start read weight
-	#10;
+	@(posedge clk);
 	// w_rq_reg = 0;
-	w_wq_reg = 1;
+	w_wq_reg <= 1;
 	// x_rq_reg = 0;
-	x_wq_reg = 0;
+	x_wq_reg <= 0;
+	w_sel_reg <= 0;
+	// load_compute_ctrl <= 0;
 	// start reading weight1
-	#10 w_sel_reg = 0;
-	w_addr_reg <=0;
-	// wx_write_reg <= 1;
-	ret_read = $fscanf(weight1_file, "%d", value_read);
-	wx_write_reg <= value_read;
+	// #10 w_sel_reg = 0;
+	// w_addr_reg <=0;
+	// // wx_write_reg <= 1;
+	// ret_read = $fscanf(weight1_file, "%d", value_read);
+	// wx_write_reg <= value_read;
 
 	@(posedge clk);
-	for (i=1; i<10; i=i+1) begin
+	for (i=0; i<10; i=i+1) begin
 		ret_read = $fscanf(weight1_file, "%d", value_read);
 		// value_read = 1;
 		w_addr_reg <= i;
@@ -251,20 +253,21 @@ initial begin
 	// read data from weight1
 	@(posedge clk);
 	w_wq_reg <= 0;
+	load_compute_ctrl <= 0;
 	// #10 w_wq_reg = 0;
 
 	// set addr in this cycle.
 	// get data in next cycle.
 	// when i=1, wx_read_reg is the value that addr=0.
 	// TODO: fix this problem in compute module. 
-	@(posedge clk);
+	// @(posedge clk);
 	// value_read <= 1;
-	w_addr_reg <= 0;
-	@(posedge clk);
-	w_addr_reg <= 0;
+	// w_addr_reg <= 0;
+	// @(posedge clk);
+	// w_addr_reg <= 0;
 	// wx_read_reg <= w_data;
 	@(posedge clk);
-	for (i=1; i<11; i=i+1) begin
+	for (i=0; i<10; i=i+1) begin
 		// ret_read = $fscanf(weight1_file, "%d", value_read);
 		// value_read = 1;
 		w_addr_reg <= i;

@@ -71,14 +71,15 @@ module mem_small
 (
 	input data_a,
 	input [9:0] addr_a,
-	input we_a, clk,
+	// input we_a, clk,
+    input we_a,
 	output reg q_a
 );
 	
 	reg [1023:0] ram;
 	
 	
-	always @ (posedge clk)
+	always @ (*)
 	begin
 		if (we_a) 
 		begin
@@ -98,14 +99,15 @@ module mem_large
 (
         input data_a,
         input [19:0] addr_a,
-        input we_a, clk,
+        // input we_a, clk,
+        input we_a,
         output reg q_a
 );
 
         reg [1048575:0] ram;
 
 
-        always @ (posedge clk)
+        always @ (*)
         begin
                 if (we_a)
                 begin
@@ -125,7 +127,7 @@ endmodule
 //.............................................................................
 
 module mem_sys(
-input clk,
+// input clk,
 input we_x,
 input we_w,
 input data_in,
@@ -136,6 +138,7 @@ input[19:0] address_w,
 input[1:0] sel_x,
 input[1:0] sel_w
 );
+
 
 wire we_x1;
 wire we_x2;
@@ -170,7 +173,7 @@ wire data_out_w4;
 mem_small mem_x1(
     .data_a(data_in_x1),
     .addr_a(address_x),
-    .clk(clk),
+    // .clk(clk),
     .we_a(we_x1),
     .q_a(data_out_x1)
 );
@@ -178,7 +181,7 @@ mem_small mem_x1(
 mem_small mem_x2(
     .data_a(data_in_x2),
     .addr_a(address_x),
-    .clk(clk),
+    // .clk(clk),
     .we_a(we_x2),
     .q_a(data_out_x2)
 );
@@ -186,7 +189,7 @@ mem_small mem_x2(
 mem_small mem_x3(
     .data_a(data_in_x3),
     .addr_a(address_x),
-    .clk(clk),
+    // .clk(clk),
     .we_a(we_x3),
     .q_a(data_out_x3)
 );
@@ -194,7 +197,7 @@ mem_small mem_x3(
 mem_small mem_x4(
     .data_a(data_in_x4),
     .addr_a(address_x),
-    .clk(clk),
+    // .clk(clk),
     .we_a(we_x4),
     .q_a(data_out_x4)
 );
@@ -202,7 +205,7 @@ mem_small mem_x4(
 mem_large mem_w1(
     .data_a(data_in_w1),
     .addr_a(address_w),
-    .clk(clk),
+    // .clk(clk),
     .we_a(we_w1),
     .q_a(data_out_w1)
 );
@@ -210,7 +213,7 @@ mem_large mem_w1(
 mem_large mem_w2(
     .data_a(data_in_w2),
     .addr_a(address_w),
-    .clk(clk),
+    // .clk(clk),
     .we_a(we_w2),
     .q_a(data_out_w2)
 );
@@ -218,7 +221,7 @@ mem_large mem_w2(
 mem_large mem_w3(
     .data_a(data_in_w3),
     .addr_a(address_w),
-    .clk(clk),
+    // .clk(clk),
     .we_a(we_w3),
     .q_a(data_out_w3)
 );
@@ -226,7 +229,7 @@ mem_large mem_w3(
 mem_large mem_w4(
     .data_a(data_in_w4),
     .addr_a(address_w),
-    .clk(clk),
+    // .clk(clk),
     .we_a(we_w4),
     .q_a(data_out_w4)
 );

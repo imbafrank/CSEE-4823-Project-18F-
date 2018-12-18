@@ -240,7 +240,7 @@ initial begin
 	end
 
 	// reset mem
-	#10 rst_mem = 1;
+	// #10 rst_mem = 1;
 
 	// start read weight
 	// start reading weight1
@@ -340,9 +340,11 @@ initial begin
 	// w_rq_reg = 0;
 	w_wq_reg = 0;
 	// x_rq_reg = 0;
-	x_wq_reg = 1;
-
+	x_addr_reg <= 0;
 	x_sel_reg = 0;
+
+	@(posedge clk);
+	x_wq_reg = 1;
 
 	@(posedge clk);
 	for (i=0; i<2; i=i+1) begin
@@ -353,8 +355,10 @@ initial begin
 		@(posedge clk);
 	end
 	$display("Input finish loading");
+	x_wq_reg <= 0;
+	
+	@(posedge clk);
 	load_compute_ctrl <= 0;
-
 	// $display("Start computing");
 	// #10 start_compute = 1;
 	@(posedge clk);

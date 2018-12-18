@@ -271,11 +271,13 @@ always @(posedge clk) begin
 				load_x_counter <= 0;
 				layer1_finish <= 1;
 				load_weight_counter <= 0;
+				sel_x_counter <= 1;
 			end
 			else if (load_x_counter >= (X1_LEN-1) && load_weight_counter < (W1_LEN-1)) begin
 				state <= `store_x2;
 				load_x_counter <= 0;
 				layer1_finish <= 0;
+				sel_x_counter <= 1;
 			end
 			else begin
 				state <= `layer_1;
@@ -287,7 +289,7 @@ always @(posedge clk) begin
 		end
 
 		`store_x2: begin
-			sel_x_counter <= 1;
+			// sel_x_counter <= 1;
 			// w_rq_reg <= 0;
 			w_wq_reg <= 0;
 			// x_rq_reg <= 0;
@@ -303,9 +305,11 @@ always @(posedge clk) begin
 			if (layer1_finish==1) begin
 				state <= `layer_2;
 				store_x_counter <= 0;
+				sel_x_counter <= 1;
 				$display("layer1 finish");
 			end
 			else begin
+				sel_x_counter <= 0;
 				state <= `layer_1;
 			end
 		end
@@ -341,11 +345,13 @@ always @(posedge clk) begin
 				load_x_counter <= 0;
 				layer2_finish <= 1;
 				load_weight_counter <= 0;
+				sel_x_counter <= 2;
 			end
 			else if (load_x_counter >= (X2_LEN-1) && load_weight_counter < (W2_LEN-1)) begin
 				state <= `store_x3;
 				load_x_counter <= 0;
 				layer2_finish <= 0;
+				sel_x_counter <= 2;
 			end
 			else begin
 				state <= `layer_2;
@@ -353,7 +359,7 @@ always @(posedge clk) begin
 		end
 
 		`store_x3: begin
-			sel_x_counter <= 2;
+			// sel_x_counter <= 2;
 			// w_rq_reg <= 0;
 			w_wq_reg <= 0;
 			// x_rq_reg <= 0;
@@ -373,6 +379,7 @@ always @(posedge clk) begin
 			end
 			else begin
 				state <= `layer_2;
+				sel_x_counter <= 1;
 			end
 		end
 
@@ -439,6 +446,7 @@ always @(posedge clk) begin
 			end
 			else begin
 				state <= `layer_3;
+				sel_x_counter <= 2;
 			end
 		end
 
@@ -522,6 +530,7 @@ always @(posedge clk) begin
 			end
 			else begin
 				state <= `layer_4;
+				sel_x_counter <= 3;
 			end
 		end
 
