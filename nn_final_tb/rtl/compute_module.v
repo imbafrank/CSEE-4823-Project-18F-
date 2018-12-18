@@ -114,8 +114,8 @@ reg [OUTPUT_LEN-1:0] store_output_counter;
 reg x_wq_reg=0;
 
 // reg store current value
-reg [W_DATA_LEN-1:0] store_weight_reg;
-reg [X_DATA_LEN-1:0] store_x_reg;
+// reg [W_DATA_LEN-1:0] store_weight_reg;
+// reg [X_DATA_LEN-1:0] store_x_reg;
 // reg store current rw status
 // reg [W_RW_LEN-1:0] rw_w_reg;
 // reg [X_RW_LEN-1:0] rw_x_reg;
@@ -160,7 +160,8 @@ assign x_wq = x_wq_reg;
 
 // connect with calc
 assign calc_1 = 1;
-assign calc_in = store_weight_reg ^ store_x_reg;
+// assign calc_in = store_weight_reg ^ store_x_reg;
+assign calc_in = w_data ^ x_data;
 
 // instantiate compute block
  calc calc_i
@@ -182,25 +183,25 @@ always @(posedge clk) begin
 		// calc_rst <= 1;
     	state <= `rst;
     	// rst_counter <= 0;
-		load_weight_counter <= 0;
-		load_x_counter <= 0;
-		store_x_counter <= 0;
+		// load_weight_counter <= 0;
+		// load_x_counter <= 0;
+		// store_x_counter <= 0;
 
-		sel_weight_counter <= 0;
-		sel_x_counter <= 0;
+		// sel_weight_counter <= 0;
+		// sel_x_counter <= 0;
 
-		store_output_counter <= 0;
-		store_weight_reg <= 0;
-		store_x_reg <= 0;
+		// store_output_counter <= 0;
+		// store_weight_reg <= 0;
+		// store_x_reg <= 0;
 
-		agg_out_reg <= 0;
-		layer1_finish <= 0;
-		layer2_finish <= 0;
-		layer3_finish <= 0;
-		layer4_finish <= 0;
+		// agg_out_reg <= 0;
+		// layer1_finish <= 0;
+		// layer2_finish <= 0;
+		// layer3_finish <= 0;
+		// layer4_finish <= 0;
 
-		calc_rst <= 1;
-		compute_finish <= 0;
+		// calc_rst <= 1;
+		// compute_finish <= 0;
 	end
 
 	// else if (!rst) begin
@@ -227,8 +228,8 @@ always @(posedge clk) begin
 			sel_x_counter <= 0;
 
 			store_output_counter <= 0;
-			store_weight_reg <= 0;
-			store_x_reg <= 0;
+			// store_weight_reg <= 0;
+			// store_x_reg <= 0;
 
 			agg_out_reg <= 0;
 			layer1_finish <= 0;
@@ -239,36 +240,45 @@ always @(posedge clk) begin
 			calc_rst <= 1;
 			compute_finish <= 0;
 
-
-		end
-
-		`layer_1: begin
-			calc_rst <= 0;
-			sel_weight_counter <= 0;
-			sel_x_counter <= 0;
-			// rst_counter <= 0;
-			// rw_w_reg <= 1;
-			// rw_x_reg <= 1;
-			// w_rq_reg <= 1;
 			w_wq_reg <= 0;
-			// x_rq_reg <= 1;
 			x_wq_reg <= 0;
 
 			r_or_w <= 1;
 			layer1_finish <= 0;
 
-			store_weight_reg <= w_data;
-			store_x_reg <= x_data;
+
+
+
+
+
+		end
+
+		`layer_1: begin
+			// calc_rst <= 0;
+			// sel_weight_counter <= 0;
+			// sel_x_counter <= 0;
+			// rst_counter <= 0;
+			// rw_w_reg <= 1;
+			// rw_x_reg <= 1;
+			// w_rq_reg <= 1;
+			// w_wq_reg <= 0;
+			// x_rq_reg <= 1;
+			// x_wq_reg <= 0;
+
+			// r_or_w <= 1;
+			// layer1_finish <= 0;
+
+			// store_weight_reg <= w_data;
+			// store_x_reg <= x_data;
 
 
 			load_weight_counter <= load_weight_counter + 1;
 			load_x_counter <= load_x_counter + 1;
 
-
-
-			if (load_x_counter >= (X1_LEN-1) && load_weight_counter >= (W1_LEN-1)) begin
+			if (load_x_counter >= (X1_LEN-1)) begin
 				state <= `store_x2;
 				load_x_counter <= 0;
+<<<<<<< HEAD
 				layer1_finish <= 1;
 				load_weight_counter <= 0;
 				sel_x_counter <= 1;
@@ -278,10 +288,48 @@ always @(posedge clk) begin
 				load_x_counter <= 0;
 				layer1_finish <= 0;
 				sel_x_counter <= 1;
+=======
+				sel_x_counter <= 1;
+				w_wq_reg <= 0;
+				x_wq_reg <= 1;
+				calc_rst <= 1;
+				r_or_w <= 0;
+				wx_write_reg <= agg_out_acted;
+
+				if (load_weight_counter >= (W1_LEN-1)) begin
+					layer1_finish <= 1;
+					load_weight_counter <= 0;
+				end
+				else begin 
+					layer1_finish <= 0;
+				end
+>>>>>>> 976a4af851d4ac043f003aa7753ea7f17a8bd21f
 			end
 			else begin
-				state <= `layer_1;
+				state <= `layer1;
 			end
+
+			// if (load_x_counter >= (X1_LEN-1) && load_weight_counter >= (W1_LEN-1)) begin
+			// 	state <= `store_x2;
+			// 	load_x_counter <= 0;
+			// 	layer1_finish <= 1;
+			// 	load_weight_counter <= 0;
+			// 	sel_x_counter <= 1;
+			// 	w_wq_reg <= 0;
+			// 	x_wq_reg <= 1;
+			// 	calc_rst <= 1;
+			// 	r_or_w <= 0;
+				
+			// end
+			// else if (load_x_counter >= (X1_LEN-1) && load_weight_counter < (W1_LEN-1)) begin
+			// 	state <= `store_x2;
+			// 	load_x_counter <= 0;
+			// 	layer1_finish <= 0;
+			// 	sel_x_counter
+			// end
+			// else begin
+			// 	state <= `layer_1;
+			// end
 
 			// if (load_weight_counter >= 802816) begin
 			// 	load_weight_counter <= 0;
@@ -293,24 +341,25 @@ always @(posedge clk) begin
 			// w_rq_reg <= 0;
 			w_wq_reg <= 0;
 			// x_rq_reg <= 0;
-			x_wq_reg <= 1;
-			
-			calc_rst <= 1;
-		
-			r_or_w <= 0;
+			x_wq_reg <= 0;
+			calc_rst <= 0;
+			r_or_w <= 1;
 			store_x_counter <= store_x_counter + 1;
 			// agg_out_reg is redundent. 
-			agg_out_reg <= agg_out_acted;
-			wx_write_reg <= agg_out_reg;
+			// agg_out_reg <= agg_out_acted;
+			// wx_write_reg <= agg_out_reg;
 			if (layer1_finish==1) begin
 				state <= `layer_2;
 				store_x_counter <= 0;
-				sel_x_counter <= 1;
+
 				$display("layer1 finish");
 			end
 			else begin
 				sel_x_counter <= 0;
 				state <= `layer_1;
+				load_x_counter <= 0;
+				sel_weight_counter <= 0;
+				sel_x_counter <= 0;
 			end
 		end
 
@@ -331,8 +380,8 @@ always @(posedge clk) begin
 			r_or_w <= 1;
 			layer2_finish <= 0;
 
-			store_weight_reg <= w_data;
-			store_x_reg <= x_data;
+			// store_weight_reg <= w_data;
+			// store_x_reg <= x_data;
 
 
 			load_weight_counter <= load_weight_counter + 1;
