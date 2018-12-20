@@ -278,7 +278,7 @@ always @(posedge clk) begin
 			if (load_x_counter >= (X1_LEN-1)) begin
 				state <= `store_x2;
 				load_x_counter <= 0;
-<<<<<<< HEAD
+
 				layer1_finish <= 1;
 				load_weight_counter <= 0;
 				sel_x_counter <= 1;
@@ -288,7 +288,7 @@ always @(posedge clk) begin
 				load_x_counter <= 0;
 				layer1_finish <= 0;
 				sel_x_counter <= 1;
-=======
+
 				sel_x_counter <= 1;
 				w_wq_reg <= 0;
 				x_wq_reg <= 1;
@@ -303,7 +303,7 @@ always @(posedge clk) begin
 				else begin 
 					layer1_finish <= 0;
 				end
->>>>>>> 976a4af851d4ac043f003aa7753ea7f17a8bd21f
+
 			end
 			else begin
 				state <= `layer1;
