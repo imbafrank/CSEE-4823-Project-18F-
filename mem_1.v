@@ -1,5 +1,3 @@
-`timescale 10us/10us
-
 module demux1to4(
      Data_in,
      sel,
@@ -91,25 +89,25 @@ begin
         for (i=0;i<1024; i=i+1)
             memory_ram_q[i] <= 0;
     end
-    else
-    begin
-        for (i=0;i<1024; i=i+1)
-             memory_ram_q[i] <= memory_ram_d[i];
-    end
+    // else
+    // begin
+    //     for (i=0;i<1024; i=i+1)
+    //          memory_ram_q[i] <= memory_ram_d[i];
+    // end
 end
 
 
-always @(*)
-begin
-    for (i=0;i<1024; i=i+1)
-        memory_ram_d[i] = memory_ram_q[i];
-    if (write_rq && !read_rq && en)
-        memory_ram_d[rw_address] = write_data;
-    if (!write_rq && read_rq && en)
-        read_data = memory_ram_q[rw_address];
-    else 
-        read_data = 1'bz;
-end
+// always @(*)
+// begin
+//     for (i=0;i<1024; i=i+1)
+//         memory_ram_d[i] = memory_ram_q[i];
+//     if (write_rq && !read_rq && en)
+//         memory_ram_d[rw_address] = write_data;
+//     if (!write_rq && read_rq && en)
+//         read_data = memory_ram_q[rw_address];
+//     else 
+//         read_data = 1'bz;
+// end
 
 endmodule
 
@@ -147,26 +145,26 @@ begin
         for (i=0;i<1048576; i=i+1)
             memory_ram_q[i] <= 0;
     end
-    else
-    begin
-        for (i=0;i<1048576; i=i+1)
-             memory_ram_q[i] <= memory_ram_d[i];
-    end
+    // else
+    // begin
+    //     for (i=0;i<1048576; i=i+1)
+    //          memory_ram_q[i] <= memory_ram_d[i];
+    // end
 end
 
 
-always @(*)
-begin
-    for (i=0;i<1048576; i=i+1)
-        memory_ram_d[i] = memory_ram_q[i];
-    if  (write_rq && !read_rq && en)
-        memory_ram_d[rw_address] = write_data;
-    if  (!write_rq && read_rq && en)
-        read_data = memory_ram_q[rw_address];
-    else
-        read_data = 1'bz;
+// always @(*)
+// begin
+//     for (i=0;i<1048576; i=i+1)
+//         memory_ram_d[i] = memory_ram_q[i];
+//     if  (write_rq && !read_rq && en)
+//         memory_ram_d[rw_address] = write_data;
+//     if  (!write_rq && read_rq && en)
+//         read_data = memory_ram_q[rw_address];
+//     else
+//         read_data = 1'bz;
 
-end
+// end
 
 endmodule
 
