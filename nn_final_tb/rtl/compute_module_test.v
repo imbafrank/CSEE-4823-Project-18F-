@@ -56,6 +56,7 @@ module compute_module
 	// parameter X3_LEN = 1024,
 	// parameter W4_LEN = 10240,
 	// parameter X4_LEN = 1024,
+	// parameter X5_LEN = 10,
 	// small nn test
 	parameter W1_LEN = 6,
 	parameter X1_LEN = 2,
@@ -68,7 +69,7 @@ module compute_module
 	parameter X5_LEN = 2,
 
 	parameter OUTPUT_LEN = 10,
-	parameter alu_width  = 12
+	parameter alu_width  = 13
 	)
 (
 	clk,

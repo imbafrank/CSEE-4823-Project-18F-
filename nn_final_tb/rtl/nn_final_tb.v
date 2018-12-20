@@ -1,11 +1,11 @@
 `timescale 10us/10us
 
 `define HALF_CLOCK_PERIOD #5
-`define WEIGHT1_FILE "../rtl/weight1.results"
-`define WEIGHT2_FILE "../rtl/weight2.results"
-`define WEIGHT3_FILE "../rtl/weight3.results"
-`define WEIGHT4_FILE "../rtl/weight4.results"
-`define INPUT_FILE "../rtl/input.results"
+`define WEIGHT1_FILE "../data/weight0.result"
+`define WEIGHT2_FILE "../data/weight1.result"
+`define WEIGHT3_FILE "../data/weight2.result"
+`define WEIGHT4_FILE "../data/weight3.result"
+`define INPUT_FILE "../data/inputs.result"
 
 module nn_tb;
 
