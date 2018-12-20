@@ -19,7 +19,7 @@ module agg (clk, rst, agg_in, agg_out2alu, agg_out_acted);
 
     output reg						agg_out_acted;
     output reg	[agg_width-1:0] 	agg_out2alu; 
-	
+    wire agg_msb;
 	assign agg_msb = agg_in[agg_width-1];
  
     always @(posedge clk or posedge rst)
