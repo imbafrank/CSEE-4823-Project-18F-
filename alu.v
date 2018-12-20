@@ -18,14 +18,15 @@ module alu (alu_in_a_lsb, alu_op, alu_in_b, alu_out);
     input               		alu_in_a_lsb, alu_op ;
     input signed[alu_width-1:0] 		alu_in_b;
     output reg signed[alu_width-1:0]	alu_out ;
-    wire						alu_in_a_lsb, alu_in_b, alu_op;
+    wire						alu_in_a_lsb, alu_op;
     
     wire [alu_width-1:0] alu_b;
     assign alu_b = alu_in_b;
     
     always @(*)
     begin
-    	case (alu_op) 
+    	alu_out = 0;
+		case (alu_op) 
     	    `alu_op_add1:
     	        begin
     	            alu_out = alu_b+alu_in_a_lsb;			
@@ -34,10 +35,10 @@ module alu (alu_in_a_lsb, alu_op, alu_in_b, alu_out);
     	        begin
     	            alu_out = alu_b-alu_in_a_lsb;
     	        end
-    	    default:
-    	        begin
-    	            alu_out = 0; 
-    	        end
+    	    // default:
+    	    //     begin
+    	    //         alu_out = 0; 
+    	    //     end
     	endcase
 
     end

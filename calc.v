@@ -18,6 +18,10 @@ module calc (clk, rst, calc_1, calc_in, agg_out2alu, agg_out_acted);
 /*Contol Signal*/
 
 //alu 
+// alu Parameters
+    parameter alu_width  = 12;
+
+//alu 
 	input 				                calc_1, calc_in;
 //agg 
 	input                               clk, rst ;
@@ -26,9 +30,6 @@ module calc (clk, rst, calc_1, calc_in, agg_out2alu, agg_out_acted);
 	output                              agg_out_acted;
 /*Instantiate Module*/
 
-//alu 
-// alu Parameters
-    parameter alu_width  = 12;
 
 // alu Inputs
 //reg   alu_in_a_lsb;
