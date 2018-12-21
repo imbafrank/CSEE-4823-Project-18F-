@@ -48,25 +48,25 @@ module compute_module
 	parameter X_DATA_LEN = 1,
 	parameter X_SEL_LEN = 2,
 	parameter X_RW_LEN = 2,
-	// parameter W1_LEN = 802816,
-	// parameter X1_LEN = 784,
-	// parameter W2_LEN = 1048576,
-	// parameter X2_LEN = 1024,
-	// parameter W3_LEN = 1048576,
-	// parameter X3_LEN = 1024,
-	// parameter W4_LEN = 10240,
-	// parameter X4_LEN = 1024,
-	// parameter X5_LEN = 10,
+	 parameter W1_LEN = 802816,
+	 parameter X1_LEN = 784,
+	 parameter W2_LEN = 1048576,
+	 parameter X2_LEN = 1024,
+	 parameter W3_LEN = 1048576,
+	 parameter X3_LEN = 1024,
+	 parameter W4_LEN = 10240,
+	 parameter X4_LEN = 1024,
+	 parameter X5_LEN = 10,
 	// small nn test
-	parameter W1_LEN = 6,
-	parameter X1_LEN = 2,
-	parameter W2_LEN = 9,
-	parameter X2_LEN = 3,
-	parameter W3_LEN = 9,
-	parameter X3_LEN = 3,
-	parameter W4_LEN = 6,
-	parameter X4_LEN = 3,
-	parameter X5_LEN = 2,
+	//parameter W1_LEN = 6,
+	//parameter X1_LEN = 2,
+//	parameter W2_LEN = 9,
+//	parameter X2_LEN = 3,
+//	parameter W3_LEN = 9,
+//	parameter X3_LEN = 3,
+//	parameter W4_LEN = 6,
+//	parameter X4_LEN = 3,
+//	parameter X5_LEN = 2,
 
 	parameter OUTPUT_LEN = 10,
 	parameter alu_width  = 13
@@ -464,7 +464,10 @@ always @(posedge clk) begin
 			state <= `check_store_addr_x5;
 			wx_write <= !store_x[alu_width-1];
 			// display_output <= wx_wirte;
-			#2 $display("%b",wx_write);
+			#2 if(wx_write==1) begin
+				$display("%d",store_x_counter);
+			end
+			// #2 $display("%d",wx_write);
 		end
 
 		// `store_x4_write: begin
@@ -482,7 +485,7 @@ always @(posedge clk) begin
 			x_sel <= 3;
 			r_or_w <= 1;
 			if (store_x_counter>=X5_LEN-1) begin
-				$finish;
+				compute_finish <= 1;
 				// state <= `load_x4;
 				// load_weight_counter <= 0;
 				// load_x_counter <= 0;

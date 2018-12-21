@@ -1,11 +1,11 @@
 `timescale 1ns / 1ps
 
 `define HALF_CLOCK_PERIOD #5
-`define WEIGHT1_FILE "../rtl/weight0.result"
-`define WEIGHT2_FILE "../rtl/weight1.result"
-`define WEIGHT3_FILE "../rtl/weight2.result"
-`define WEIGHT4_FILE "../rtl/weight3.result"
-`define INPUT_FILE "../rtl/inputs.result"
+`define WEIGHT1_FILE "../data/weights/weight0.result"
+`define WEIGHT2_FILE "../data/weights/weight1.result"
+`define WEIGHT3_FILE "../data/weights/weight2.result"
+`define WEIGHT4_FILE "../data/weights/weight3.result"
+`define INPUT_FILE "../data/input_files/inputs_0.result"
 
 module mnist_nn_tb;
 
@@ -259,7 +259,7 @@ initial begin
 	w_sel_reg <= 0;
 
 	@(posedge clk);
-	for (i=0; i<6; i=i+1) begin
+	for (i=0; i<784*1024; i=i+1) begin
 		ret_read = $fscanf(weight1_file, "%d", value_read);
 		// value_read = 1;
 		@(posedge clk);
@@ -301,7 +301,7 @@ initial begin
 
 
 	@(posedge clk);
-	for (i=0; i<9; i=i+1) begin
+	for (i=0; i<1024*1024; i=i+1) begin
 		ret_read = $fscanf(weight2_file, "%d", value_read);
 		// value_read = 1;
 		@(posedge clk);
@@ -316,7 +316,7 @@ initial begin
 	w_sel_reg = 2;
 
 	@(posedge clk);
-	for (i=0; i<9; i=i+1) begin
+	for (i=0; i<1024*1024; i=i+1) begin
 		ret_read = $fscanf(weight3_file, "%d", value_read);
 		// value_read = 1;
 		@(posedge clk);
@@ -331,7 +331,7 @@ initial begin
 	w_sel_reg = 3;
 
 	@(posedge clk);
-	for (i=0; i<9; i=i+1) begin
+	for (i=0; i<10240; i=i+1) begin
 		ret_read = $fscanf(weight4_file, "%d", value_read);
 		// value_read = 1;
 		@(posedge clk);
@@ -354,7 +354,7 @@ initial begin
 	x_wq_reg = 1;
 
 	@(posedge clk);
-	for (i=0; i<2; i=i+1) begin
+	for (i=0; i<784; i=i+1) begin
 		ret_read = $fscanf(input_file, "%d", value_read);
 		// value_read = 1;
 		@(posedge clk);
@@ -375,6 +375,18 @@ initial begin
 		$finish;
 	end
 
+	// @(posedge clk);
+	// load_compute_ctrl <= 1;
+
+	// input_file = $fopen(`INPUT_FILE,"r");
+	// if (!input_file)
+	// begin
+	// 	$display("Couldn't open the input file.");
+	// 	$finish;
+	// end
+	// else begin
+	// 	$display("Input file opened.");
+	// end
 	// for testing load weight
 	// @(posedge clk);
 	// w_sel_reg <= 0;

@@ -72,24 +72,24 @@ r1
 !i113 1
 R6
 vcompute_module
-!s10a 1544841989
-!s110 1544841993
+Z7 !s110 1545353162
 !i10b 1
-!s100 ETSJda=h4e8g`?OLFj`mh1
-Ig6NNK?b_C@dO]<;PzQ8N20
+!s100 miPIj@N>;=[>gnU@V>WRh3
+IkV]i`Tmc@WlEQ5^d5bILn3
 R3
 R0
-w1544841989
-8../rtl/compute_module.v
-F../rtl/compute_module.v
-L0 15
+w1545352654
+F../rtl/./compute_module_test.v
+Z8 8../rtl/mnist_nn.v
+Z9 F../rtl/mnist_nn.v
+L0 41
 R5
 r1
 !s85 0
 31
-!s108 1544841992.991627
-!s107 ../rtl/compute_module.v|
-!s90 -reportprogress|300|-incr|../rtl/compute_module.v|
+Z10 !s108 1545353162.165520
+Z11 !s107 ../rtl/./mem_sys_new.v|../rtl/./compute_module_test.v|../rtl/mnist_nn.v|
+Z12 !s90 -reportprogress|300|-incr|../rtl/mnist_nn.v|
 !i113 1
 R6
 vcompute_module_tb
@@ -110,5 +110,150 @@ r1
 !s108 1544842284.291429
 !s107 ../rtl/compute_module_tb.v|
 !s90 -reportprogress|300|-incr|../rtl/compute_module_tb.v|
+!i113 1
+R6
+vdemux1to4
+R7
+!i10b 1
+!s100 aWZR4j]=B>P;FLUiNdGB73
+I0M3ZeUP]=AN4W@_J[^zY31
+R3
+R0
+Z13 w1545351119
+Z14 F../rtl/./mem_sys_new.v
+R8
+R9
+L0 1
+R5
+r1
+!s85 0
+31
+R10
+R11
+R12
+!i113 1
+R6
+vmem_large
+R7
+!i10b 1
+!s100 fZ5fDEHD5?Y_XB]8ZA94b1
+IVO?9N>jXcUh@4O^cYXU8Q3
+R3
+R0
+R13
+R14
+R8
+R9
+L0 98
+R5
+r1
+!s85 0
+31
+R10
+R11
+R12
+!i113 1
+R6
+vmem_small
+R7
+!i10b 1
+!s100 H5P9R5R@hYkTV5BA`JKGV1
+I;0[T::22gV2DbOJSZPl2k2
+R3
+R0
+R13
+R14
+R8
+R9
+L0 70
+R5
+r1
+!s85 0
+31
+R10
+R11
+R12
+!i113 1
+R6
+vmem_sys
+R7
+!i10b 1
+!s100 KlMS7ZSOOgoc7Rff?J20Y3
+IPaBDS6@K@L>>HE[1`KmNn3
+R3
+R0
+R13
+R14
+R8
+R9
+L0 129
+R5
+r1
+!s85 0
+31
+R10
+R11
+R12
+!i113 1
+R6
+vmnist_nn
+R7
+!i10b 1
+!s100 l1BaA=omF2>mUnB?hccZT2
+INeLIjBi3aXO]^PLzK]:^=2
+R3
+R0
+R13
+R8
+R9
+L0 5
+R5
+r1
+!s85 0
+31
+R10
+R11
+R12
+!i113 1
+R6
+vmnist_nn_tb
+R7
+!i10b 1
+!s100 zBaKZnWK:DeR`FN7g0b`82
+Ikj<3[VbjQFW9Q8znJh0k93
+R3
+R0
+w1545353075
+8../rtl/mnist_nn_tb.v
+F../rtl/mnist_nn_tb.v
+L0 10
+R5
+r1
+!s85 0
+31
+!s108 1545353162.938263
+!s107 ../rtl/mnist_nn_tb.v|
+!s90 -reportprogress|300|-incr|../rtl/mnist_nn_tb.v|
+!i113 1
+R6
+vmux4to1
+R7
+!i10b 1
+!s100 c[@Vid9^6X`SEjYK7B<o91
+I=NTKQcL@5cL;gjWmn0H341
+R3
+R0
+R13
+R14
+R8
+R9
+L0 55
+R5
+r1
+!s85 0
+31
+R10
+R11
+R12
 !i113 1
 R6
