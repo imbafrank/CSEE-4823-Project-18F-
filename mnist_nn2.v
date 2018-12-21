@@ -1,7 +1,4 @@
 `timescale 1ns / 1ps
-//`include "./compute_module.v"
-//`include "./mem_sys_new.v"
-`timescale 1ns/1ps
 `define rst 0
 `define load_x1 1
 // `define store_x 2
@@ -43,7 +40,7 @@
 
 module compute_module
 #(
-	parameter W_ADDR_LEN = 20,
+	parameter W_ADDR_LEN = 10,
 	parameter W_DATA_LEN = 1,
 	parameter W_SEL_LEN = 2,
 	parameter W_RW_LEN = 2,
