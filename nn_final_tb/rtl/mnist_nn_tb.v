@@ -5,7 +5,107 @@
 `define WEIGHT2_FILE "../data/weights/weight1.result"
 `define WEIGHT3_FILE "../data/weights/weight2.result"
 `define WEIGHT4_FILE "../data/weights/weight3.result"
-`define INPUT_FILE "../data/input_files/inputs_0.result"
+`define INPUT_FILE0 "../data/input_files/inputs_0.result"
+`define INPUT_FILE1 "../data/input_files/inputs_1.result"
+`define INPUT_FILE2 "../data/input_files/inputs_2.result"
+`define INPUT_FILE3 "../data/input_files/inputs_3.result"
+`define INPUT_FILE4 "../data/input_files/inputs_4.result"
+`define INPUT_FILE5 "../data/input_files/inputs_5.result"
+`define INPUT_FILE6 "../data/input_files/inputs_6.result"
+`define INPUT_FILE7 "../data/input_files/inputs_7.result"
+`define INPUT_FILE8 "../data/input_files/inputs_8.result"
+`define INPUT_FILE9 "../data/input_files/inputs_9.result"
+`define INPUT_FILE10 "../data/input_files/inputs_10.result"
+`define INPUT_FILE11 "../data/input_files/inputs_11.result"
+`define INPUT_FILE12 "../data/input_files/inputs_12.result"
+`define INPUT_FILE13 "../data/input_files/inputs_13.result"
+`define INPUT_FILE14 "../data/input_files/inputs_14.result"
+`define INPUT_FILE15 "../data/input_files/inputs_15.result"
+`define INPUT_FILE16 "../data/input_files/inputs_16.result"
+`define INPUT_FILE17 "../data/input_files/inputs_17.result"
+`define INPUT_FILE18 "../data/input_files/inputs_18.result"
+`define INPUT_FILE19 "../data/input_files/inputs_19.result"
+`define INPUT_FILE20 "../data/input_files/inputs_20.result"
+`define INPUT_FILE21 "../data/input_files/inputs_21.result"
+`define INPUT_FILE22 "../data/input_files/inputs_22.result"
+`define INPUT_FILE23 "../data/input_files/inputs_23.result"
+`define INPUT_FILE24 "../data/input_files/inputs_24.result"
+`define INPUT_FILE25 "../data/input_files/inputs_25.result"
+`define INPUT_FILE26 "../data/input_files/inputs_26.result"
+`define INPUT_FILE27 "../data/input_files/inputs_27.result"
+`define INPUT_FILE28 "../data/input_files/inputs_28.result"
+`define INPUT_FILE29 "../data/input_files/inputs_29.result"
+`define INPUT_FILE30 "../data/input_files/inputs_30.result"
+`define INPUT_FILE31 "../data/input_files/inputs_31.result"
+`define INPUT_FILE32 "../data/input_files/inputs_32.result"
+`define INPUT_FILE33 "../data/input_files/inputs_33.result"
+`define INPUT_FILE34 "../data/input_files/inputs_34.result"
+`define INPUT_FILE35 "../data/input_files/inputs_35.result"
+`define INPUT_FILE36 "../data/input_files/inputs_36.result"
+`define INPUT_FILE37 "../data/input_files/inputs_37.result"
+`define INPUT_FILE38 "../data/input_files/inputs_38.result"
+`define INPUT_FILE39 "../data/input_files/inputs_39.result"
+`define INPUT_FILE40 "../data/input_files/inputs_40.result"
+`define INPUT_FILE41 "../data/input_files/inputs_41.result"
+`define INPUT_FILE42 "../data/input_files/inputs_42.result"
+`define INPUT_FILE43 "../data/input_files/inputs_43.result"
+`define INPUT_FILE44 "../data/input_files/inputs_44.result"
+`define INPUT_FILE45 "../data/input_files/inputs_45.result"
+`define INPUT_FILE46 "../data/input_files/inputs_46.result"
+`define INPUT_FILE47 "../data/input_files/inputs_47.result"
+`define INPUT_FILE48 "../data/input_files/inputs_48.result"
+`define INPUT_FILE49 "../data/input_files/inputs_49.result"
+`define INPUT_FILE50 "../data/input_files/inputs_50.result"
+`define INPUT_FILE51 "../data/input_files/inputs_51.result"
+`define INPUT_FILE52 "../data/input_files/inputs_52.result"
+`define INPUT_FILE53 "../data/input_files/inputs_53.result"
+`define INPUT_FILE54 "../data/input_files/inputs_54.result"
+`define INPUT_FILE55 "../data/input_files/inputs_55.result"
+`define INPUT_FILE56 "../data/input_files/inputs_56.result"
+`define INPUT_FILE57 "../data/input_files/inputs_57.result"
+`define INPUT_FILE58 "../data/input_files/inputs_58.result"
+`define INPUT_FILE59 "../data/input_files/inputs_59.result"
+`define INPUT_FILE60 "../data/input_files/inputs_60.result"
+`define INPUT_FILE61 "../data/input_files/inputs_61.result"
+`define INPUT_FILE62 "../data/input_files/inputs_62.result"
+`define INPUT_FILE63 "../data/input_files/inputs_63.result"
+`define INPUT_FILE64 "../data/input_files/inputs_64.result"
+`define INPUT_FILE65 "../data/input_files/inputs_65.result"
+`define INPUT_FILE66 "../data/input_files/inputs_66.result"
+`define INPUT_FILE67 "../data/input_files/inputs_67.result"
+`define INPUT_FILE68 "../data/input_files/inputs_68.result"
+`define INPUT_FILE69 "../data/input_files/inputs_69.result"
+`define INPUT_FILE70 "../data/input_files/inputs_70.result"
+`define INPUT_FILE71 "../data/input_files/inputs_71.result"
+`define INPUT_FILE72 "../data/input_files/inputs_72.result"
+`define INPUT_FILE73 "../data/input_files/inputs_73.result"
+`define INPUT_FILE74 "../data/input_files/inputs_74.result"
+`define INPUT_FILE75 "../data/input_files/inputs_75.result"
+`define INPUT_FILE76 "../data/input_files/inputs_76.result"
+`define INPUT_FILE77 "../data/input_files/inputs_77.result"
+`define INPUT_FILE78 "../data/input_files/inputs_78.result"
+`define INPUT_FILE79 "../data/input_files/inputs_79.result"
+`define INPUT_FILE80 "../data/input_files/inputs_80.result"
+`define INPUT_FILE81 "../data/input_files/inputs_81.result"
+`define INPUT_FILE82 "../data/input_files/inputs_82.result"
+`define INPUT_FILE83 "../data/input_files/inputs_83.result"
+`define INPUT_FILE84 "../data/input_files/inputs_84.result"
+`define INPUT_FILE85 "../data/input_files/inputs_85.result"
+`define INPUT_FILE86 "../data/input_files/inputs_86.result"
+`define INPUT_FILE87 "../data/input_files/inputs_87.result"
+`define INPUT_FILE88 "../data/input_files/inputs_88.result"
+`define INPUT_FILE89 "../data/input_files/inputs_89.result"
+`define INPUT_FILE90 "../data/input_files/inputs_90.result"
+`define INPUT_FILE91 "../data/input_files/inputs_91.result"
+`define INPUT_FILE92 "../data/input_files/inputs_92.result"
+`define INPUT_FILE93 "../data/input_files/inputs_93.result"
+`define INPUT_FILE94 "../data/input_files/inputs_94.result"
+`define INPUT_FILE95 "../data/input_files/inputs_95.result"
+`define INPUT_FILE96 "../data/input_files/inputs_96.result"
+`define INPUT_FILE97 "../data/input_files/inputs_97.result"
+`define INPUT_FILE98 "../data/input_files/inputs_98.result"
+`define INPUT_FILE99 "../data/input_files/inputs_99.result"
+
 
 module mnist_nn_tb;
 
@@ -18,10 +118,10 @@ parameter X_DATA_LEN = 1;
 parameter X_SEL_LEN = 2;
 // parameter X_RW_LEN = 2;
 
-integer weight1_file, weight2_file, weight3_file, weight4_file, input_file;
+integer weight1_file, weight2_file, weight3_file, weight4_file;
 integer ret_read;
 integer i, value_read;
-
+integer input_file;
 
 reg clk, rst, rst_mem;
 reg en_compute;
@@ -74,6 +174,8 @@ reg load_compute_ctrl;
 
 reg write_w_finish;
 reg write_x1_finish;
+
+integer test_sample_counter;
 
 mnist_nn mnist_nn_i
 (
@@ -187,6 +289,7 @@ initial begin
 	// load mode: load data from external into memory
 	load_compute_ctrl = 1;
 	en_compute = 0;
+	test_sample_counter = 0;
 	// start_compute = 0;
 
 	weight1_file = $fopen(`WEIGHT1_FILE,"r");
@@ -229,15 +332,17 @@ initial begin
 		$display("Weight4 file opened.");
 	end
 
-	input_file = $fopen(`INPUT_FILE,"r");
-	if (!input_file)
-	begin
-		$display("Couldn't open the input file.");
-		$finish;
-	end
-	else begin
-		$display("Input file opened.");
-	end
+	// for (i=0;i<100,i=i+1) begin
+	// 	input_file[i] = $fopen($sformatf("../data/input_files/inputs_%0d.result",test_sample_counter),"r+"));
+	// 	if (!input_file)
+	// 	begin
+	// 		$display("Couldn't open the input file.");
+	// 		$finish;
+	// 	end
+	// 	else begin
+	// 		$display("Input file opened.");
+	// 	end
+	// end
 
 	// reset mem
 	// #10 rst_mem = 1;
@@ -341,40 +446,69 @@ initial begin
 	end
 	$display("W4 finish loading.");
 
-	// start reading input
-	@(posedge clk);
-	// w_rq_reg = 0;
-	w_wq_reg = 0;
-	@(posedge clk);
-	// x_rq_reg = 0;
-	x_addr_reg <= 0;
-	x_sel_reg = 0;
-
-	@(posedge clk);
-	x_wq_reg = 1;
-
-	@(posedge clk);
-	for (i=0; i<784; i=i+1) begin
-		ret_read = $fscanf(input_file, "%d", value_read);
-		// value_read = 1;
+	while (test_sample_counter<100) begin
+			
+		
+		// start reading input
 		@(posedge clk);
-		x_addr_reg <= i;
-		wx_write_reg <= value_read;
+		// w_rq_reg = 0;
+		w_wq_reg = 0;
 		@(posedge clk);
+		// x_rq_reg = 0;
+		x_addr_reg <= 0;
+		x_sel_reg <= 0;
+
+		@(posedge clk);
+		input_file = $fopen($sformatf("../data/input_files/inputs_%0d.result",test_sample_counter),"r+");
+		if (!input_file)
+		begin
+			$display("Couldn't open the input file.");
+			$finish;
+		end
+		else begin
+			$display("Input file opened.");
+		end
+		@(posedge clk);
+		@(posedge clk);
+		@(posedge clk);
+		@(posedge clk);
+		@(posedge clk);
+		@(posedge clk);
+		@(posedge clk);
+
+		@(posedge clk);
+		x_wq_reg = 1;
+
+		@(posedge clk);
+		for (i=0; i<784; i=i+1) begin
+			ret_read = $fscanf(input_file, "%d", value_read);
+			// value_read = 1;
+			@(posedge clk);
+			x_addr_reg <= i;
+			wx_write_reg <= value_read;
+			@(posedge clk);
+		end
+		$display("Input finish loading");
+		x_wq_reg <= 0;
+
+
+		@(posedge clk);
+		load_compute_ctrl <= 0;
+		@(posedge clk);
+		en_compute <= 1;
+
+		while(compute_finish==0) begin
+			@(posedge clk);
+		end
+
+
+		en_compute <= 0;
+		load_compute_ctrl <= 1;
+		test_sample_counter <= test_sample_counter + 1;
+
+
 	end
-	$display("Input finish loading");
-	x_wq_reg <= 0;
-
-
-	@(posedge clk);
-	load_compute_ctrl <= 0;
-
-	@(posedge clk);
-	en_compute <= 1;
-	if (compute_finish==1) begin
-		$finish;
-	end
-
+	$finish;
 	// @(posedge clk);
 	// load_compute_ctrl <= 1;
 
